@@ -1,6 +1,9 @@
-import React from "react";
+"use client"
+import React,{useState,useEffect} from "react";
 import CardComponentOne from "./_common/CardComponentOne";
 import Link from "next/link";
+import { callApi,METHODS } from "@/_Api Handlers/apiFunctions";
+import { PRODUCT_ENDPOINT } from "@/_Api Handlers/endpoints";
 const DUMMY_DATA = [
   {
     imageUrl: "/images/cardImage.png",
@@ -25,6 +28,25 @@ const DUMMY_DATA = [
 ];
 
 const ProductsSection = () => {
+const [products, setProducts] = useState([]);
+
+const dataToMap = products.slice(4,(products.length - 1))
+
+  useEffect(() => {
+    callApi({
+      endPoint:PRODUCT_ENDPOINT,
+      method:METHODS.get,
+      params:{page:1}
+    }).then((response)=>{
+      setProducts(response?.data?.results);
+    }).catch((err)=>{
+      console.error("Error fetching products:", err);
+    }).finally(()=>{
+
+    })
+  }, []);
+  
+
   return (
     <>
       <h5>Popular Produts</h5>
@@ -33,7 +55,7 @@ const ProductsSection = () => {
         <span className="uppercase text-red-600">Temptations</span>
       </h4>{" "}
       <div className="flex space-x-5">
-        {DUMMY_DATA?.map((curItem, index) => (
+        {dataToMap?.map((curItem, index) => (
           <CardComponentOne key={index} data={curItem} />
         ))}
       </div>

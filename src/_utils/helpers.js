@@ -32,11 +32,21 @@ export const manageUserAuthorization = ({
   action,
   token = null,
   refreshToken = null,
+  firstName = null,
+  lastName = null,
 }) => {
   if (action === "remove") {
+    Cookies.remove("token");
+    Cookies.remove("refreshToken");
+    localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
+    Cookies.remove("firstName");
+    Cookies.remove("lastName");
   } else {
     Cookies.set("token", token);
     Cookies.set("refreshToken", refreshToken);
+    Cookies.set("firstName", firstName)
+    Cookies.set("lastName", lastName);
     localStorage.setItem("token", token);
     localStorage.setItem("refreshToken", refreshToken);
   }
