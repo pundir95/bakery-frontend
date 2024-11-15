@@ -8,7 +8,7 @@ const SignUp = () => {
   const [signUpType, setSignUpType] = useState("");
   return (
     <div>
-      {signUpType === "indivisual" ? (
+      {/* {signUpType === "indivisual" ? (
         <IndivisualSignup />
       ) : signUpType === "company" ? (
         <CompanySignup />
@@ -17,7 +17,8 @@ const SignUp = () => {
           signUpType={signUpType}
           setSignUpType={setSignUpType}
         />
-      )}
+      )} */}
+      <IndivisualSignup />
     </div>
   );
 };

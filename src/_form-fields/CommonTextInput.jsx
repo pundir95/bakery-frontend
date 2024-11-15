@@ -16,7 +16,7 @@ const CommonTextInput = ({
   icon,
   onIconClick,
   isNumberOnly = false,
-  maxlength = null,
+  maxLength = null,
   rows = null,
 }) => {
   const {
@@ -25,7 +25,7 @@ const CommonTextInput = ({
     setValue,
   } = formConfig;
   return (
-    <div>
+    <div className="relative">
       <div className="label">{label}</div>
       {isNumberOnly ? (
         <input
@@ -39,7 +39,7 @@ const CommonTextInput = ({
           type={type}
           placeholder={placeholder}
           className={className}
-          maxlength={maxlength}
+          maxLength={maxLength}
         />
       ) : type === "textarea" ? (
         <textarea
@@ -47,7 +47,7 @@ const CommonTextInput = ({
           type={type}
           placeholder={placeholder}
           className={className}
-          maxlength={maxlength}
+          maxLength={maxLength}
           rows={rows}
         />
       ) : (
@@ -56,11 +56,11 @@ const CommonTextInput = ({
           type={type}
           placeholder={placeholder}
           className={className}
-          maxlength={maxlength}
+          maxLength={maxLength}
         />
       )}
 
-      <div className="icon" onClick={onIconClick}>
+      <div className="icon absolute right-5 top-[37px]" onClick={onIconClick}>
         {icon}
       </div>
       <ErrorMessage fieldName={fieldName} errors={errors} />

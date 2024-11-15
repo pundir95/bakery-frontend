@@ -33,7 +33,7 @@ const BillingDetailsSection = () => {
             rules={BillingDetailsValidations?.["phone_number"]}
             label="Mobile Number"
             isNumberOnly={true}
-            maxlength={10}
+            maxLength={10}
           />
 
           <CommonTextInput

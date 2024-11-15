@@ -1,14 +1,19 @@
 "use client";
 import AuthRedirectSection from "@/_components/_common/AuthRedirectSection";
 import CommonTextInput from "@/_form-fields/CommonTextInput";
-import { useGoogleLogin } from "@react-oauth/google";
 import { LoginValidations } from "@/_validations/authValidations";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import CommonButton from "@/_components/_common/CommonButton";
+import { login } from "@/_Api Handlers/apiFunctions";
+import { useRouter } from "next/navigation";
+import { successType, toastMessage } from "@/_utils/toastMessage";
+import { manageUserAuthorization } from "@/_utils/helpers";
+import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 
 const Login = () => {
+  const router = useRouter();
   const formConfig = useForm();
   const { handleSubmit } = formConfig;
   const [showPassword, setShowPassword] = useState(false);
@@ -16,25 +21,44 @@ const Login = () => {
     setShowPassword((prev) => !prev);
   };
   const onSubmit = (values) => {
-    console.log(values);
+    login(values)
+      .then((res) => {
+        manageUserAuthorization({
+          action: "add",
+          token: res?.data?.access,
+          refreshToken: res?.data?.refresh,
+        });
+
+        toastMessage("User logged in successfully", successType);
+        router.push("/home");
+      })
+      .catch((err) => {
+        toastMessage(
+          err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
+        );
+      });
   };
   return (
     <>
       <AuthRedirectSection
-        text="Don't have an account? "
+        text="Don't have an account?"
         linkText="Sign up"
         linkUrl="/sign-up"
         className="right-align"
       />
-      <form onSubmit={handleSubmit(onSubmit)} className="login-form">
-        <h2>Login!</h2>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="login-form w-full max-w-[450px]"
+      >
+        <h2 className="text-3xl font-bold mb-4">Login!</h2>
         <CommonTextInput
-          fieldName="username"
+          fieldName="email"
           formConfig={formConfig}
           type="text"
-          placeholder="Enter Username"
-          rules={LoginValidations["userName"]}
+          placeholder="Enter Email"
+          rules={LoginValidations["email"]}
           label="Username or email address"
+          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-black"
         />
         <CommonTextInput
           fieldName="password"
@@ -45,6 +69,7 @@ const Login = () => {
           type={showPassword ? "text" : "password"}
           //   for adding icons
           onIconClick={toggleShowPassword}
+          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-black relative"
           icon={
             <Image
               src={showPassword ? "/icons/closedEye.svg" : "/icons/openEye.svg"}
@@ -57,10 +82,14 @@ const Login = () => {
         <AuthRedirectSection
           text=""
           linkText="Forgot your password"
-          linkUrl="/forgot-password"
+          linkUrl="/forget-password"
           className="text-right"
         />
-        <CommonButton type="submit" className="sign-in-button" text="Sign in" />
+        <CommonButton
+          type="submit"
+          className="sign-in-button w-full py-3 mt-4 bg-gray-300 text-gray-600 font-semibold rounded-md hover:bg-[#5F6F52] hover:text-white rounded-[50px] cursor-pointer transition-all duration-400 ease-in-out"
+          text="Sign in"
+        />
         <AuthRedirectSection
           text="Don't have an acount? "
           linkText="Sign up"

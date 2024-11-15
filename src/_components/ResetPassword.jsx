@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import ErrorMessage from "./ErrorMessage";
 import { IndivisualSignupValidations } from "@/_validations/authValidations";
 import Image from "next/image";
+import ErrorMessage from "./_common/ErrorMessage";
 
-const PasswordSection = ({ formConfig, fieldOneName, fieldTwoName }) => {
+const ResetPassword = ({ formConfig, fieldOneName, fieldTwoName }) => {
   const {
     setValue,
     setError,
@@ -32,7 +32,7 @@ const PasswordSection = ({ formConfig, fieldOneName, fieldTwoName }) => {
       } else {
         if (confirmPassword?.length) {
           setError(fieldTwoName, {
-            type: "manual", 
+            type: "manual",
             message: "password and confirm password must match",
           });
         }
@@ -109,4 +109,4 @@ const PasswordSection = ({ formConfig, fieldOneName, fieldTwoName }) => {
   );
 };
 
-export default PasswordSection;
+export default ResetPassword;
