@@ -2,14 +2,15 @@ import { NextResponse } from "next/server";
 
 const PRIVATE_ROUTES = ["/dashboard", "/profile"];
 const PUBLIC_ROUTES = ["/login", "/sign-up"];
-const SHARED_ROUTES = ["/about-us", "/blog", "/home"];
+const SHARED_ROUTES = ["/about-us", "/blog", "/home", "/"];
 
 export function middleware(req) {
-  const token = req.cookies.get("authToken");
+  const token = req.cookies.get("token");
   const { pathname } = req.nextUrl;
   console.log(pathname, "pathname");
-  if (pathname == "/") {
-    return NextResponse.redirect(new URL("/home", req.url));
+  // update (home route code)
+  if (pathname == "/home") {
+    return NextResponse.redirect(new URL("/", req.url));
   }
   if (!token && PRIVATE_ROUTES.includes(pathname)) {
     return NextResponse.redirect(new URL("/login", req.url));

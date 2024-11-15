@@ -123,6 +123,21 @@ body {
   width: 92px;
   border: 2px solid #e0e0e0;
 }
+.OTPInputContainer {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+}
+
+.otpInput {
+  padding: 10px;
+  margin: 5px 3px 20px;
+  width: 55px !important;
+  border-radius: 8px;
+  border: 1px solid var(--Is-light-gray);
+  height: 55px;
+  text-align: center;
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;

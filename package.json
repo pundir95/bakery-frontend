@@ -16,13 +16,17 @@
     "@hookform/resolvers": "^3.9.0",
     "@react-oauth/google": "^0.12.1",
     "axios": "^1.7.7",
+    "js-cookie": "^3.0.5",
     "next": "14.2.14",
     "react": "^18",
     "react-dom": "^18",
     "react-google-autocomplete": "^2.7.3",
     "react-hook-form": "^7.53.0",
     "react-international-phone": "^4.3.0",
+    "react-otp-input": "^3.1.1",
     "react-responsive-carousel": "^3.2.23",
+    "react-select": "^5.8.2",
+    "react-toastify": "^10.0.6",
     "yup": "^1.4.0"
   },
   "devDependencies": {

@@ -7,8 +7,8 @@ export const INVALID_EMAIL_MESSAGE = "Please enter a valid email";
 
 // login validations
 export const LoginValidations = {
-  userName: {
-    required: "Username is required",
+  email: {
+    required: "Email is required",
   },
   password: {
     required: "Password is required",
@@ -47,10 +47,22 @@ export const IndivisualSignupValidations = {
   address: {
     required: "Delivery address is required",
   },
-  zip_code: {
+  zipcode: {
     required: "ZIP code is required",
   },
-  contact_method: "Contact method is required",
+  terms_conditions: {
+    required: "This field is required",
+  },
+  contact_method: {
+    // update required: uncomment this whenever it is added from backend
+    // required: "Preffered contact method is required",
+  },
+  state: {
+    required: "This field is required",
+  },
+  city: {
+    required: "City is required",
+  },
 };
 
 export const CompanySignupValidations = {
@@ -86,5 +98,13 @@ export const CompanySignupValidations = {
   },
   business_type: {
     required: "Business type is required",
+  },
+};
+
+export const ForgetPasswordValidations = {
+  email: {
+    required: "Email address is required",
+    pattern: EMAIL_REGEX,
+    message: "Please enter a valid email",
   },
 };

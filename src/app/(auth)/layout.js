@@ -11,6 +11,7 @@ const AuthLayout = ({ children }) => {
             alt="auth image"
             width={500}
             height={20}
+            priority={false}
           />
         </div>
         <div className="section2">{children}</div>

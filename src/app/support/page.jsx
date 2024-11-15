@@ -35,7 +35,7 @@ const SupportPage = () => {
             <div className="question text-[#000000]">{question}</div>
             <div className="answer text-[#515151]">{answer}</div>
           </div>
-        ))}
+        ))} 
       </div>
     </div>
   );
