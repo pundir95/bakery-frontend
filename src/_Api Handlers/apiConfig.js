@@ -15,6 +15,12 @@ export const authAxios = axios.create({
   },
 });
 
+export const INSTANCE = {
+  authorized: "authorized",
+  auth: "auth",
+  formInstance: "formInstance",
+};
+
 const MULTIPART = "multipart";
 
 const createAuthorizedInstance = (type) => {

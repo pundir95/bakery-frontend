@@ -7,6 +7,9 @@ import { logout } from "@/_Api Handlers/apiFunctions";
 import { toastMessage } from "@/_utils/toastMessage";
 import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 import Cookies from "js-cookie";
+import { manageUserAuthorization } from "@/_utils/helpers";
+import { useRouter } from "next/navigation";
+
 const NAV_LINKS = [
   {
     label: "Home",
@@ -30,21 +33,32 @@ const NAV_LINKS = [
   },
 ];
 const Navbar = () => {
+  const router = useRouter();
   const pathname = usePathname();
   const token = Cookies.get("token");
+  const firstName = Cookies.get("firstName");
+  const lastName = Cookies.get("lastName");
+  const name = `${firstName} ${lastName}`
+
+  // const handleLogout = () => {
+  //   const payload = {};
+  //   logout(payload)
+  //     .then((res) => {
+  //       toastMessage("Logged out successfully");
+  //       manageUserAuthorization({ action: "remove" });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       toastMessage(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
+  //     });
+  // };
 
   const handleLogout = () => {
-    const payload = {};
-    logout(payload)
-      .then((res) => {
-        toastMessage("Logged out successfully");
-        manageUserAuthorization({ action: "remove" });
-      })
-      .catch((err) => {
-        console.log(err);
-        toastMessage(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
-      });
+    manageUserAuthorization({ action: "remove" });
+    router.push("/login");
+    toastMessage("Logged out successfully");
   };
+
   return (
     <div
       className="w-full shadow-md"
@@ -74,7 +88,8 @@ const Navbar = () => {
 
         {/* Login and Signup Section */}
         {token ? (
-          <div className="logout">
+          <div className="logout flex gap-4 text-black">
+            <p>{name}</p>
             <CommonButton type="button" text="logout" onClick={handleLogout} />
           </div>
         ) : (

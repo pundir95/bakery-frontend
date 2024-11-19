@@ -1,4 +1,5 @@
 import { authAxios, authorizeAxios } from "./apiConfig";
+import { INSTANCE } from "./apiConfig";
 
 export const METHODS = {
   get: "GET",

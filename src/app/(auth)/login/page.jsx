@@ -27,6 +27,8 @@ const Login = () => {
           action: "add",
           token: res?.data?.access,
           refreshToken: res?.data?.refresh,
+          firstName: res?.data?.first_name,
+          lastName: res?.data?.last_name
         });
 
         toastMessage("User logged in successfully", successType);
