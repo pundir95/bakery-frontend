@@ -83,100 +83,59 @@ const IndivisualSignup = () => {
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-md mx-auto space-y-4 font-[sans-serif] text-[#333] mt-4"
+        className="mx-auto w-full max-w-[720px] space-y-4 font-[sans-serif] text-[#333] mt-4"
       >
-        <h2>Sign Up!</h2>
-        {/* section1 */}
-        <CommonTextInput
-          fieldName="first_name"
-          formConfig={formConfig}
-          type="text"
-          placeholder="Enter first name"
-          rules={IndivisualSignupValidations["first_name"]}
-          label="First Name"
-        />
-        <CommonTextInput
-          fieldName="last_name"
-          formConfig={formConfig}
-          type="text"
-          placeholder="Enter last name"
-          rules={IndivisualSignupValidations["last_name"]}
-          label="Last Name"
-        />
-        {/* section1 */}
-        {/* section2 */}
-        <CommonTextInput
-          fieldName="email"
-          formConfig={formConfig}
-          type="text"
-          placeholder="Enter your email"
-          rules={IndivisualSignupValidations["email"]}
-          label="Email Address"
-        />
-        <CommonTextInput
-          fieldName="phone_number"
-          formConfig={formConfig}
-          type="text"
-          placeholder="Enter your phone number"
-          rules={IndivisualSignupValidations["phone_number"]}
-          label="Phone Number"
-          isNumberOnly={true}
-        />
-        {/* section2 */}
-        {/* password section */}
-        <PasswordSection
-          formConfig={formConfig}
-          fieldOneName={"password"}
-          fieldTwoName={"confirm_password"}
-        />
-        {/* password section */}
-        <LocationField
-          fieldName="address"
-          formConfig={formConfig}
-          placeholder="Enter Delivery Address"
-          label="Delivery Address"
-          rules={IndivisualSignupValidations["address"]}
-          options={{
-            types: ["address"],
-            componentRestrictions: { country: ["us"] },
-          }}
-        />
-        <CommonSelect
-          options={STATE_OPTIONS}
-          type="react-select"
-          fieldName="state"
-          formConfig={formConfig}
-          placeholder="Select State"
-          rules={IndivisualSignupValidations["state"]}
-          label="State"
-        />
-        <LocationField
-          fieldName="city"
-          formConfig={formConfig}
-          placeholder="Enter City"
-          label="City"
-          rules={IndivisualSignupValidations["city"]}
-          options={{
-            types: ["(cities)"],
-          }}
-        />
-        <CommonTextInput
-          fieldName="zipcode"
-          formConfig={formConfig}
-          type="text"
-          placeholder="Enter your zip code"
-          rules={IndivisualSignupValidations["zipcode"]}
-          label="ZIP code"
-          isNumberOnly={true}
-        />
-        <CommonTextInput
-          fieldName="contact_method"
-          formConfig={formConfig}
-          type="text"
-          placeholder="Enter your prefered contact code"
-          rules={IndivisualSignupValidations["contact_method"]}
-          label="Preferred Contact Method"
-        />
+        <h2 className="text-3xl font-medium mb-40.">Sign Up!</h2>
+        <div className="form-grid-wrapper">
+          {/* section1 */}
+          <CommonTextInput
+            fieldName="first_name"
+            formConfig={formConfig}
+            type="text"
+            placeholder="Enter first name"
+            rules={IndivisualSignupValidations["first_name"]}
+            className="common-field"
+            label="First Name"
+          />
+          <CommonTextInput
+            fieldName="last_name"
+            formConfig={formConfig}
+            type="text"
+            placeholder="Enter last name"
+            rules={IndivisualSignupValidations["last_name"]}
+            className="common-field"
+            label="Last Name"
+          />
+          {/* section1 */}
+          {/* section2 */}
+          <CommonTextInput
+            fieldName="email"
+            formConfig={formConfig}
+            type="text"
+            placeholder="Enter your email"
+            className="common-field"
+            rules={IndivisualSignupValidations["email"]}
+            label="Email Address"
+          />
+          <CommonTextInput
+            fieldName="phone_number"
+            formConfig={formConfig}
+            type="text"
+            placeholder="Enter your phone number"
+            className="common-field"
+            rules={IndivisualSignupValidations["phone_number"]}
+            label="Phone Number"
+            isNumberOnly={true}
+          />
+          {/* section2 */}
+          {/* password section */}
+        </div>
+          <PasswordSection
+            formConfig={formConfig}
+            fieldOneName={"password"}
+            className="common-field"
+            fieldTwoName={"confirm_password"}
+          />
         <div className="terms-and-conditions">
           <TermsAndConditionsText
             register={register}
@@ -185,17 +144,19 @@ const IndivisualSignup = () => {
             errors={errors}
           />{" "}
         </div>
-        <CommonButton
-          type="submit"
-          className="sign-in-button"
-          text="Create an account"
-        />
-        <AuthRedirectSection
-          text="Have an account?"
-          linkText="Log in"
-          linkUrl="/login"
-          className="right-align"
-        />{" "}
+        <div className="flex gap-7 items-center">
+          <CommonButton
+            type="submit"
+            className="sign-in-button w-full py-4 mt-4 bg-gray-300 text-gray-600 font-normal mb-2 rounded-md hover:bg-[#5F6F52] max-w-[300px] hover:text-white rounded-[50px] cursor-pointer transition-all duration-400 ease-in-out"
+            text="Create an account"
+          />
+          <AuthRedirectSection
+            text="Have an account?"
+            linkText="Log in"
+            linkUrl="/login"
+            className="right-align"
+          />{" "}
+        </div>
       </form>
     </div>
   );

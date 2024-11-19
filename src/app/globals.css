@@ -1,10 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --field-bg: #F5F5F5;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,37 +14,27 @@
     --foreground: #ededed;
   }
 }
-
+*
+{
+  font-family: 'Poppins' , sans-serif;
+}
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
 }
 .commonInput {
   @apply px-4 py-3 bg-gray-100 focus:bg-transparent w-full text-sm outline-[#333] rounded-sm transition-all;
 }
-.login-form {
-  @apply max-w-md mx-auto space-y-4 font-[sans-serif] text-[#333] mt-4;
-}
-
 .login-container {
   width: 100%;
   display: flex;
   align-items: center;
 }
 .sign-in-button {
-  @apply px-5 py-2.5 rounded-full text-white text-sm tracking-wider font-medium border border-current outline-none bg-[#e5e5e5]  active:bg-[#333];
+  @apply rounded-full text-white text-[20px] tracking-wider border border-current outline-none bg-[#e5e5e5]  active:bg-[#333];
 }
 .right-align {
   @apply text-right;
-}
-.section1 {
-  width: 40%;
-  height: 100vh;
-}
-.section2 {
-  width: 60%;
-  height: 100vh;
 }
 .error-msg {
   @apply text-red-600;
@@ -63,6 +54,7 @@ body {
 }
 .icon {
   cursor: pointer;
+  top: calc(50% + 7px);
 }
 .selection-container {
   display: flex;
@@ -138,8 +130,43 @@ body {
   height: 55px;
   text-align: center;
 }
+.common-field
+{
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #00000033;
+  background-color: var(--field-bg);
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+.form-grid-wrapper
+{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.form-grid-wrapper > div
+{
+  width: 48%;
+}
+.password-wrapper
+{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.password-wrapper > div
+{
+  width: 48%;
+}
+.password-icon
+{
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
 }
