@@ -26,7 +26,7 @@ const CommonTextInput = ({
   } = formConfig;
   return (
     <div className="relative">
-      <div className="label">{label}</div>
+      <div className="label mb-[7px]">{label}</div>
       {isNumberOnly ? (
         <input
           {...register(fieldName, {
@@ -60,7 +60,7 @@ const CommonTextInput = ({
         />
       )}
 
-      <div className="icon absolute right-5 top-[37px]" onClick={onIconClick}>
+      <div className="icon absolute right-5 -translate-y-1/2" onClick={onIconClick}>
         {icon}
       </div>
       <ErrorMessage fieldName={fieldName} errors={errors} />

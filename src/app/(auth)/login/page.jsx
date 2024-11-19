@@ -40,17 +40,17 @@ const Login = () => {
   };
   return (
     <>
-      <AuthRedirectSection
+      {/* <AuthRedirectSection
         text="Don't have an account?"
         linkText="Sign up"
         linkUrl="/sign-up"
         className="right-align"
-      />
+      /> */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="login-form w-full max-w-[450px]"
+        className="login-form w-full max-w-[558px]"
       >
-        <h2 className="text-3xl font-bold mb-4">Login!</h2>
+        <h2 className="text-3xl font-medium mb-4">Login!</h2>
         <CommonTextInput
           fieldName="email"
           formConfig={formConfig}
@@ -58,7 +58,7 @@ const Login = () => {
           placeholder="Enter Email"
           rules={LoginValidations["email"]}
           label="Username or email address"
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-black"
+          className="w-full common-field mb-4"
         />
         <CommonTextInput
           fieldName="password"
@@ -69,7 +69,7 @@ const Login = () => {
           type={showPassword ? "text" : "password"}
           //   for adding icons
           onIconClick={toggleShowPassword}
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-black relative"
+          className="w-full common-field mb-4"
           icon={
             <Image
               src={showPassword ? "/icons/closedEye.svg" : "/icons/openEye.svg"}
@@ -87,7 +87,7 @@ const Login = () => {
         />
         <CommonButton
           type="submit"
-          className="sign-in-button w-full py-3 mt-4 bg-gray-300 text-gray-600 font-semibold rounded-md hover:bg-[#5F6F52] hover:text-white rounded-[50px] cursor-pointer transition-all duration-400 ease-in-out"
+          className="sign-in-button w-full py-4 mt-4 bg-gray-300 text-gray-600 font-normal mb-2 rounded-md hover:bg-[#5F6F52] max-w-[300px] hover:text-white rounded-[50px] cursor-pointer transition-all duration-400 ease-in-out"
           text="Sign in"
         />
         <AuthRedirectSection

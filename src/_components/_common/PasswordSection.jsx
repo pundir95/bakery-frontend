@@ -41,31 +41,33 @@ const PasswordSection = ({ formConfig, fieldOneName, fieldTwoName }) => {
   };
 
   return (
-    <div>
+    <div className="password-wrapper">
       {/* password */}
       <div>
         <div className="label">Password</div>
-        <input
-          {...register(fieldOneName, {
-            ...IndivisualSignupValidations?.["password"],
-            onChange: (e) => {
-              handleChangePassword(e.target.value, fieldOneName);
-              setValue(fieldOneName, e.target.value);
-            },
-          })}
-          type={showPass?.password ? "text" : "password"}
-          placeholder={"Enter your password"}
-          className={"commonInput"}
-        />
-        <div className="icon" onClick={() => handleToglePassword("password")}>
-          <Image
-            src={
-              showPass?.password ? "/icons/closedEye.svg" : "/icons/openEye.svg"
-            }
-            alt="Toggle Password Visibility Icon"
-            width={24}
-            height={24}
+        <div className="relative">
+          <input
+            {...register(fieldOneName, {
+              ...IndivisualSignupValidations?.["password"],
+              onChange: (e) => {
+                handleChangePassword(e.target.value, fieldOneName);
+                setValue(fieldOneName, e.target.value);
+              },
+            })}
+            type={showPass?.password ? "text" : "password"}
+            placeholder={"Enter your password"}
+            className={"commonInput common-field"}
           />
+          <div className="password-icon icon" onClick={() => handleToglePassword("password")}>
+            <Image
+              src={
+                showPass?.password ? "/icons/closedEye.svg" : "/icons/openEye.svg"
+              }
+              alt="Toggle Password Visibility Icon"
+              width={24}
+              height={24}
+            />
+          </div>
         </div>
         <ErrorMessage fieldName={fieldOneName} errors={errors} />
       </div>
@@ -73,35 +75,37 @@ const PasswordSection = ({ formConfig, fieldOneName, fieldTwoName }) => {
       {/* confirm password */}
       <div>
         <div className="label">Confirm Password</div>
-        <input
-          {...register(fieldTwoName, {
-            required: "Confirm password is required",
-            validate: (value) =>
-              value === watch(fieldOneName) ||
-              "Password and confirm password must match",
-            onChange: (e) => {
-              handleChangePassword(e.target.value, fieldTwoName);
-              setValue(fieldTwoName, e.target.value);
-            },
-          })}
-          type={showPass?.confirm_password ? "text" : "password"}
-          placeholder={"Confirm your password"}
-          className={"commonInput"}
-        />
-        <div
-          className="icon"
-          onClick={() => handleToglePassword("confirm_password")}
-        >
-          <Image
-            src={
-              showPass?.confirm_password
-                ? "/icons/closedEye.svg"
-                : "/icons/openEye.svg"
-            }
-            alt="Toggle Password Visibility Icon"
-            width={24}
-            height={24}
+        <div className="relative">
+          <input
+            {...register(fieldTwoName, {
+              required: "Confirm password is required",
+              validate: (value) =>
+                value === watch(fieldOneName) ||
+                "Password and confirm password must match",
+              onChange: (e) => {
+                handleChangePassword(e.target.value, fieldTwoName);
+                setValue(fieldTwoName, e.target.value);
+              },
+            })}
+            type={showPass?.confirm_password ? "text" : "password"}
+            placeholder={"Confirm your password"}
+            className={"commonInput common-field"}
           />
+          <div
+            className="password-icon icon"
+            onClick={() => handleToglePassword("confirm_password")}
+          >
+            <Image
+              src={
+                showPass?.confirm_password
+                  ? "/icons/closedEye.svg"
+                  : "/icons/openEye.svg"
+              }
+              alt="Toggle Password Visibility Icon"
+              width={24}
+              height={24}
+            />
+          </div>
         </div>
         <ErrorMessage fieldName={fieldTwoName} errors={errors} />
       </div>
