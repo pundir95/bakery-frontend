@@ -1,8 +1,7 @@
 "use client";
 import CommonTextInput from "@/_form-fields/CommonTextInput";
 import { IndivisualSignupValidations } from "@/_validations/authValidations";
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
 import PasswordSection from "./_common/PasswordSection";
 import LocationField from "./_common/LocationField";
 import AuthRedirectSection from "./_common/AuthRedirectSection";
@@ -15,10 +14,18 @@ import { successType, toastMessage } from "@/_utils/toastMessage";
 import { DEFAULT_ERROR_MESSAGE, STATE_OPTIONS } from "@/_constants/constant";
 import { returnAddressInfo } from "@/_utils/helpers";
 import CommonSelect from "@/_form-fields/CommonSelect";
+import EmailInput from "@/_form-fields/EmailInput";
+import SignupTabs from "./SignupTabs";
 
-const IndivisualSignup = () => {
+const SignupForm = ({
+  formConfig,
+  activeTab,
+  tabOption,
+  onSubmit,
+  isVerified,
+  handleVerifyClick,
+}) => {
   const router = useRouter();
-  const formConfig = useForm();
   const {
     handleSubmit,
     watch,
@@ -26,66 +33,26 @@ const IndivisualSignup = () => {
     setValue,
     formState: { errors },
   } = formConfig;
-  const onSubmit = (values) => {
-    const {
-      address,
-      password,
-      first_name,
-      last_name,
-      phone_number,
-      terms_and_conditions,
-      zipcode,
-      email,
-      city,
-      state,
-    } = values;
-    // update required : Confirm about city,state and country key values
-
-    // for extracting state , city and country from address
-    // const { state, city, country } = returnAddressInfo(
-    //   address?.address_components
-    // );
-
-    const payload = {
-      name: `${first_name} ${last_name}`,
-      address: address?.formatted_address,
-      city: city?.formatted_address,
-      state: state?.value,
-      country: "US",
-      zipcode: zipcode,
-      term_condition: terms_and_conditions,
-      contact_no: phone_number,
-      user: {
-        email: email,
-        role: "bakery",
-        first_name: first_name,
-        last_name: last_name,
-        password: password,
-      },
-      // need to confirm this from backend first
-      primary: true,
-    };
-
-    console.log(payload, "payload");
-    signUp(payload)
-      .then((res) => {
-        toastMessage("User registered succesfully", successType);
-        router.push("/login");
-      })
-      .catch((err) => {
-        console.log(err.message, "signup error");
-        toastMessage(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
-      });
-  };
-  console.log(watch("city"), "city");
-
   return (
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="mx-auto w-full max-w-[720px] space-y-4 font-[sans-serif] text-[#333] mt-4"
       >
-        <h2 className="text-3xl font-medium mb-40.">Sign Up!</h2>
+        {activeTab === tabOption.company ? (
+          <CommonTextInput
+            fieldName="company_name"
+            formConfig={formConfig}
+            type="text"
+            placeholder="Enter Company name"
+            rules={IndivisualSignupValidations["company_name"]}
+            className="common-field"
+            label="Company Name"
+          />
+        ) : (
+          ""
+        )}
+
         <div className="form-grid-wrapper">
           {/* section1 */}
           <CommonTextInput
@@ -108,7 +75,7 @@ const IndivisualSignup = () => {
           />
           {/* section1 */}
           {/* section2 */}
-          <CommonTextInput
+          <EmailInput
             fieldName="email"
             formConfig={formConfig}
             type="text"
@@ -116,6 +83,8 @@ const IndivisualSignup = () => {
             className="common-field"
             rules={IndivisualSignupValidations["email"]}
             label="Email Address"
+            handleVerifyClick={handleVerifyClick}
+            isVerified={isVerified}
           />
           <CommonTextInput
             fieldName="phone_number"
@@ -130,12 +99,12 @@ const IndivisualSignup = () => {
           {/* section2 */}
           {/* password section */}
         </div>
-          <PasswordSection
-            formConfig={formConfig}
-            fieldOneName={"password"}
-            className="common-field"
-            fieldTwoName={"confirm_password"}
-          />
+        <PasswordSection
+          formConfig={formConfig}
+          fieldOneName={"password"}
+          className="common-field"
+          fieldTwoName={"confirm_password"}
+        />
         <div className="terms-and-conditions">
           <TermsAndConditionsText
             register={register}
@@ -162,4 +131,4 @@ const IndivisualSignup = () => {
   );
 };
 
-export default IndivisualSignup;
+export default SignupForm;

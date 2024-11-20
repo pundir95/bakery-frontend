@@ -16,6 +16,9 @@ export const LoginValidations = {
 };
 
 export const IndivisualSignupValidations = {
+  company_name: {
+    required: "Company name is required",
+  },
   first_name: {
     required: "First name is required",
   },
