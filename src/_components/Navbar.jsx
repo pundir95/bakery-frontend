@@ -54,9 +54,24 @@ const Navbar = () => {
   // };
 
   const handleLogout = () => {
+
+    // const values = {
+    //   token: token,
+    // };
+    // logout(values)
+    //   .then((res) => {
+    //     manageUserAuthorization({ action: "remove" });
+    //     router.push("/login");
+    //   })
+    //   .catch((err) => {
+    //     toastMessage(
+    //       err?.response?.data?.non_field_errors?.[0] || DEFAULT_ERROR_MESSAGE
+    //     );
+    //   });
+
     manageUserAuthorization({ action: "remove" });
     router.push("/login");
-    toastMessage("Logged out successfully");
+    // toastMessage("Logged out successfully");
   };
 
   return (

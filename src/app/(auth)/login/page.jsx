@@ -31,7 +31,7 @@ const Login = () => {
           lastName: res?.data?.last_name
         });
 
-        toastMessage("User logged in successfully", successType);
+        // toastMessage("User logged in successfully", successType);
         router.push("/home");
       })
       .catch((err) => {

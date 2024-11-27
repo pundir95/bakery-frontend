@@ -21,15 +21,31 @@ export const IndivisualSignupValidations = {
   },
   first_name: {
     required: "First name is required",
+    maxLength: {
+      value: 20,
+      message: "First name must not exceed 20 characters.",
+    },
+    minLength: {
+      value: 2,
+      message: "First name must be at least 2 characters long.",
+    },
   },
   last_name: {
     required: "Last name is required",
+    maxLength: {
+      value: 20,
+      message: "Last name must not exceed 20 characters.",
+    },
+    minLength: {
+      value: 2,
+      message: "Last name must be at least 2 characters long.",
+    },
   },
   phone_number: {
     required: "Phone number is required",
-    minLength: {
-      value: 10,
-      message: "Phone number must be exactly 10 digits",
+    pattern: {
+      value: /^(?:46|0)[\d\s\-]{7,13}$/,
+      message: "Please enter a valid Swedish phone number",
     },
   },
   email: {
