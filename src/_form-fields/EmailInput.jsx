@@ -18,8 +18,9 @@ const EmailInput = ({
   isNumberOnly = false,
   maxLength = null,
   rows = null,
-  isVerified,
-  handleVerifyClick,
+  readOnly = false
+  // isVerified,
+  // handleVerifyClick,
 }) => {
   const {
     register,
@@ -35,11 +36,12 @@ const EmailInput = ({
           placeholder={placeholder}
           className={className}
           maxLength={maxLength}
+          readOnly={readOnly}
         />
       <div className="icon absolute right-5 -translate-y-1/2" onClick={onIconClick}>
         {icon}
       </div>
-      <div className="absolute right-2 top-2/3 -translate-y-1/2">
+      {/* <div className="absolute right-2 top-2/3 -translate-y-1/2">
         {isVerified ? (
           <span className="text-green-500">✔</span> // Tick icon
         ) : (
@@ -51,7 +53,7 @@ const EmailInput = ({
             Verify
           </button>
         )}
-      </div>
+      </div> */}
       <ErrorMessage fieldName={fieldName} errors={errors} />
     </div>
   );
