@@ -33,6 +33,7 @@ const SignupForm = ({
     setValue,
     formState: { errors },
   } = formConfig;
+
   return (
     <div>
       <form
@@ -85,6 +86,7 @@ const SignupForm = ({
             label="Email Address"
             handleVerifyClick={handleVerifyClick}
             isVerified={isVerified}
+            readOnly={true}
           />
           <CommonTextInput
             fieldName="phone_number"

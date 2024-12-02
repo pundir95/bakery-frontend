@@ -86,3 +86,13 @@ export const changePassword = (payload) => {
   console.log("change password payload: ", payload);
   return authAxios.post("/password/reset/", payload);
 };
+
+export const verifyEmail = (payload) => {
+  console.log("change password payload: ", payload);
+  return authAxios.post("/send-verification-email/", payload);
+}
+
+export const verifyEmailOTP = (payload) => {
+  console.log("change password payload: ", payload);
+  return authAxios.post("/verify-email/", payload);
+}
