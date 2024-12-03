@@ -9,7 +9,10 @@ import { successType, toastMessage } from "@/_utils/toastMessage";
 import { ADD_TO_CART } from "@/_Api Handlers/endpoints";
 
 const CardComponentOne = ({ data }) => {
-  const { images, name } = data;
+  console.log(data,"this is data")
+  // commented for future use
+  // const { images, name } = data;
+  const {title,imageUrl,price} = data
 
   const pathName = usePathname();
 
@@ -35,7 +38,7 @@ const CardComponentOne = ({ data }) => {
   return (
     <div className="group relative">
       {" "}
-      <div className="max-w-xs rounded overflow-hidden shadow-lg border border-gray-200">
+      <div className="max-w-xs rounded overflow-hidden border border-gray-200 pt-12 pb-7 rounded-[26px]">
         <Image
           // src={images[0]}
           src="/images/cardImage.png"
@@ -44,8 +47,11 @@ const CardComponentOne = ({ data }) => {
           height={202}
         />
 
-        <div className="flex space-x-4 p-4">
-          <h2 className="font-bold text-xl mb-2">{name}</h2>
+        <div className="flex space-x-4 px-4 justify-between">
+          {/* <h2 className="font-bold text-xl mb-2">{name}</h2> */}
+          <p className="text-xl mb-0">{title}</p>
+          <p className="font-bold text-redPrimary text-xl mb-0">${price}</p>
+
           {/* <p className="text-red-600 text-lg">{`$ ${price}`}</p> */}
         </div>
       </div>

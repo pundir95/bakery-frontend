@@ -10,6 +10,11 @@ module.exports = {
         foreground: "var(--foreground)",
         customRed: "#FF6363",
         customBlack: "#434343",
+        btnBackground : '#FF2F2F',
+        greyText : '#515151',
+        eyebrowColor: '#813D33',
+        redPrimary: '#FF2F2F',
+        greenBg: '#5F6F52'
       },
     },
   },
