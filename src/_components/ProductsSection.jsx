@@ -30,8 +30,7 @@ const DUMMY_DATA = [
 const ProductsSection = () => {
   const [products, setProducts] = useState([]);
 
-  // const dataToMap = products.slice(4,(products.length - 1))
-  const dataToMap = products
+  const dataToMap = products.slice(5,(products.length - 1))
 
   useEffect(() => {
     callApi({
@@ -56,9 +55,9 @@ const ProductsSection = () => {
           <span className="text-customRed font-bebas">Delightful </span>
           Temptations
         </h4>{" "}
-        <div className="flex space-x-5 justify-center">
-          {DUMMY_DATA?.map((curItem, index) => (
-            <CardComponentOne key={index} data={curItem} />
+        <div className="flex space-x-5 justify-center flex-wrap">
+          {dataToMap?.map((curItem, index) => (
+            <CardComponentOne key={index} data={curItem} showButtons={true}/>
           ))}
         </div>
         <div className="text-center mt-10">

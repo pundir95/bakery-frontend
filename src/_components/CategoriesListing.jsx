@@ -76,7 +76,8 @@ const CategoriesListing = () => {
 
   console.log(categories, "categories");
 
-  const CategoryDataToMap = categories.slice(4,(products.length - 1))
+  // const CategoryDataToMap = categories.slice(4,(products.length - 1))
+
 
   useEffect(() => {
     callApi({
@@ -123,7 +124,7 @@ const CategoriesListing = () => {
       </h1>{" "}
       {/* categories listing */}
       <div className="flex justify-center items-center space-x-4">
-        {DUMMY_CATEGORIES?.map((cat, index) => (
+        {categories?.map((cat, index) => (
           <SingleCategory
             data={cat}
             key={index}
@@ -139,7 +140,7 @@ const CategoriesListing = () => {
       {/* filters */}
       {/* product listing */}
       <div className="mt-3 mb-4 flex space-x-5 flex-wrap">
-        {DUMMY_PRODUCTS?.map((curItem, index) => (
+        {products?.map((curItem, index) => (
           <Link href={`products/${curItem?.id}`}>
             <CardComponentOne key={index} data={curItem} />
           </Link>
