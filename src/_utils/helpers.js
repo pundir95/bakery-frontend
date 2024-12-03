@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { baseURL } from "@/_Api Handlers/apiConfig";
 
 export const returnAddressInfo = (addressComponents) => {
   if (addressComponents) {
@@ -50,4 +51,8 @@ export const manageUserAuthorization = ({
     localStorage.setItem("token", token);
     localStorage.setItem("refreshToken", refreshToken);
   }
+};
+
+export const createPreview = (imagePreview) => {
+  return `${baseURL}${imagePreview}`;
 };
