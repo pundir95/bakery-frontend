@@ -31,8 +31,8 @@ const RELATED_PRODUCTS = [
 
 const IMAGES = [
   "/images/cardImage.png",
-  "/images/cardImage.png",
-  "/images/cardImage.png",
+  "/images/bread.png",
+  "/images/donut-hero.png",
 ];
 
 const SingleProductPage = ({ params }) => {
@@ -43,8 +43,8 @@ const SingleProductPage = ({ params }) => {
       <SingleProductHeader />
       <div className="product-info">
         {/* carousel */}
-        {/* <ProductCarousel images={IMAGES} /> */}
-        <div className="product-carousel">Product carousel</div>
+        <ProductCarousel images={IMAGES} />
+        {/* <div className="product-carousel">Product carousel</div> */}
         <div className="single-product-detail">
           <SingleProductDetail />
         </div>
@@ -56,7 +56,7 @@ const SingleProductPage = ({ params }) => {
           Products
         </span>
       </h1>{" "}
-      <div className="mt-3 mb-4 flex space-x-5">
+      <div className="mt-3 mb-4 flex space-x-5 justify-center">
         {RELATED_PRODUCTS?.map((curItem, index) => (
           <CardComponentOne key={index} data={curItem} />
         ))}

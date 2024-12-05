@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import CardComponentOne from "./_common/CardComponentOne";
 import Link from "next/link";
@@ -30,36 +30,41 @@ const DUMMY_DATA = [
 const ProductsSection = () => {
   const [products, setProducts] = useState([]);
 
-  const dataToMap = products.slice(5,(products.length - 1))
 
   useEffect(() => {
     callApi({
       endPoint: PRODUCT_ENDPOINT,
       method: METHODS.get,
-      params: { page: 1 }
-    }).then((response) => {
-      setProducts(response?.data?.results);
-    }).catch((err) => {
-      console.error("Error fetching products:", err);
-    }).finally(() => {
-
+      params: { page: 1 },
     })
+      .then((response) => {
+        setProducts(response?.data?.results);
+      })
+      .catch((err) => {
+        console.error("Error fetching products:", err);
+      })
+      .finally(() => {});
   }, []);
-
 
   return (
     <>
-      <section className="pt-10 pb-20">
-        <h5 className="text-eyebrowColor font-semibold text-[20px] mb-7 text-center">Popular Produts</h5>
+      <section className="pt-10 pb-20 bg-[#FFFDF4]">
+        <h5 className="text-eyebrowColor font-semibold text-[20px] mb-7 text-center">
+          Popular Produts
+        </h5>
         <h4 className="uppercase text-4xl md:text-5xl font-bebas text-center mb-10">
           <span className="text-customRed font-bebas">Delightful </span>
           Temptations
         </h4>{" "}
-        <div className="flex space-x-5 justify-center flex-wrap">
-          {dataToMap?.map((curItem, index) => (
-            <CardComponentOne key={index} data={curItem} showButtons={true}/>
-          ))}
-        </div>
+        {products.length > 0 ? (
+          <div className="flex space-x-5 justify-center flex-wrap">
+            {products?.map((curItem, index) => (
+              <CardComponentOne key={index} data={curItem} showButtons={true} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-black font-bold text-xl flex justify-center">loading...</div>
+        )}
         <div className="text-center mt-10">
           <Link
             href="/products"

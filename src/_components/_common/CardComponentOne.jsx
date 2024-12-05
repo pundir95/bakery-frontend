@@ -41,38 +41,51 @@ const CardComponentOne = ({ data, showButtons = false }) => {
   return (
     <div className="group relative">
       {" "}
-      <div className="max-w-xs rounded overflow-hidden border border-gray-200 pt-12 pb-7 rounded-[26px]">
+      {/* <div className="max-w-xs rounded overflow-hidden border border-gray-200 pt-12 pb-7 rounded-[26px]">
         <Image
-          // src={images[0]}
           src={
             data?.feature_image
               ? createPreview(data?.feature_image?.image)
               : "/images/cardImage.png"
           }
-          // src="/images/cardImage.png"
           alt="card-image"
           width={280}
           height={202}
         />
 
         <div className="flex space-x-4 px-4 justify-between">
-          {/* <h2 className="font-bold text-xl mb-2">{name}</h2> */}
           <p className="text-xl mb-0">{name}</p>
           <p className="font-bold text-redPrimary text-xl mb-0">
             ${data?.product_detail?.inventory?.regular_price}
           </p>
 
-          {/* <p className="text-red-600 text-lg">{`$ ${price}`}</p> */}
+        </div>
+      </div> */}
+      <div className="w-full">
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+          {/* {favorites.map((favorite) => ( */}
+          <div className="gap-2 mb-2 border h-64 w-56 rounded-lg flex flex-col justify-between p-4 cursor-pointer">
+            <div className="h-4/5">
+              <img
+                src={
+                  data?.feature_image
+                    ? createPreview(data?.feature_image?.image)
+                    : "/images/cardImage.png"
+                }
+                alt={"image"}
+                className="h-4/5 w-full"
+              />
+            </div>
+            <div className="flex flex items-center justify-between">
+              <div className="text-black font-semibold text-sm">{name}</div>
+              <div className="font-semibold" style={{ color: "#FF2F2F" }}>
+                ${data?.product_detail?.inventory?.regular_price}
+              </div>
+            </div>
+          </div>
+          {/* ))} */}
         </div>
       </div>
-      {isProductsPage && (
-        <button
-          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-blue-500 text-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          onClick={(event) => handleCart(event, data)}
-        >
-          Add to Cart
-        </button>
-      )}
       {showButtons && (
         <div
           className="absolute inset-0 flex items-center justify-center gap-2 
@@ -91,6 +104,19 @@ const CardComponentOne = ({ data, showButtons = false }) => {
             <Eye fill="white" />
           </button>
         </div>
+      )}
+      {isProductsPage && (
+        <div
+        className="absolute inset-0 flex items-center justify-center gap-2 
+opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/80 rounded-[26px]"
+      >
+        <button
+          className="p-3 bg-red-500 text-white rounded-lg"
+          onClick={(event) => handleCart(event, data)}
+        >
+          ADD TO CART
+        </button>
+      </div>
       )}
     </div>
   );

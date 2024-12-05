@@ -10,12 +10,18 @@ import ProfileFavourite from "@/_components/ProfileFavourite";
 import ProfilePayment from "@/_components/ProfilePayment";
 import ProfileAddress from "@/_components/ProfileAddress";
 import ProfileSetting from "@/_components/ProfileSetting";
+import Sidebar from "@/_components/Sidebar";
 
 const Profile = () => {
-  const [currentCategory, setCurrentCategory] = useState('orders')
+  const [currentCategory, setCurrentCategory] = useState('orders');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleCategoryChange = (category) => {
     setCurrentCategory(category);
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   const renderContent = () => {
@@ -49,7 +55,7 @@ const Profile = () => {
             </div>
           </div>
           <div>
-            <button className="bg-[#FF6D2F] text-white py-2 px-4 rounded-md">
+            <button className="bg-[#FF6D2F] text-white py-2 px-4 rounded-md" onClick={toggleSidebar}>
               Edit Profile
             </button>
           </div>
@@ -104,6 +110,9 @@ const Profile = () => {
           {renderContent()}
         </div>
       </div>
+
+      {/* Sidebar */}
+      <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}/>
     </>
   );
 };

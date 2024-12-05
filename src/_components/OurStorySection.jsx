@@ -4,7 +4,7 @@ import React from "react";
 const OurStorySection = () => {
   return (
     <>
-      <section className="container max-w-[1372px] mx-auto py-12 flex flex-col md:flex-row items-center justify-between">
+      <section className="container max-w-[1372px] mx-auto py-12 flex flex-col md:flex-row items-center justify-between bg-[#FFFDF4]">
         {/* Text Section */}
         <div className="md:w-1/2 space-y-4 text-left">
           <h5 className="text-eyebrowColor font-semibold text-[20px] mb-12">Our Story</h5>

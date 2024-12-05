@@ -13,12 +13,12 @@ const BillingDetailsSection = () => {
     console.log(values, "billing details");
   };
   return (
-    <div className="billing-details border-[1px] border-[#FFFAF433]">
-      <div className="heading">
-        <h2>Billing Details</h2>
-      </div>
-      <div className="details-form">
-        <form onSubmit={handleSubmit(onSubmit)}>
+    <>
+    <h2 className="text-xl font-semibold">Billing Details</h2>
+    <div className="font-sans w-full mx-auto p-6 bg-[#ffffff] shadow-md rounded-lg border">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* Billing Details Section */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <CommonTextInput
             formConfig={formConfig}
             placeholder="Enter Name"
@@ -35,7 +35,6 @@ const BillingDetailsSection = () => {
             isNumberOnly={true}
             maxLength={10}
           />
-
           <CommonTextInput
             formConfig={formConfig}
             placeholder="Enter Email"
@@ -43,7 +42,6 @@ const BillingDetailsSection = () => {
             rules={BillingDetailsValidations?.["email"]}
             label="Email"
           />
-
           <CommonTextInput
             formConfig={formConfig}
             placeholder="Enter City"
@@ -51,7 +49,6 @@ const BillingDetailsSection = () => {
             rules={BillingDetailsValidations?.["city"]}
             label="City"
           />
-
           <CommonTextInput
             formConfig={formConfig}
             placeholder="Enter State"
@@ -59,7 +56,6 @@ const BillingDetailsSection = () => {
             rules={BillingDetailsValidations?.["state"]}
             label="State"
           />
-
           <CommonTextInput
             formConfig={formConfig}
             placeholder="Enter Zip Code"
@@ -68,18 +64,23 @@ const BillingDetailsSection = () => {
             label="Zipcode"
             isNumberOnly={true}
           />
-
-          <LocationField
+        </div>
+        {/* <textarea
+          placeholder="Address *"
+          className="w-full p-3 mt-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
+          rows="3"
+          required
+        ></textarea> */}
+        <LocationField
             fieldName="address"
             formConfig={formConfig}
             rules={BillingDetailsValidations["address"]}
             placeholder="Enter Address"
             label="Address"
           />
-          <CommonButton type="submit" text="Submit"/>
-        </form>
-      </div>
+      </form>
     </div>
+    </>
   );
 };
 
