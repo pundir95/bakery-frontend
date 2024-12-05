@@ -15,12 +15,11 @@ const SingleCategory = ({ data }) => {
       <div className="flex flex-col items-center cursor-pointer">
         <img
           src={"/images/category-image.png"}
-          className="w-28 h-28 rounded-full object-cover"
+          className="w-28 h-38 rounded-full object-cover"
           alt="category-image"
         />
-        <p className="mt-2 text-center text-sm font-medium">{name}</p>
+        <p className="mt-2 text-center text-sm font-medium text-black">{name}</p>
       </div>
-      <CommonButton type={"button"} text="Add to cart" />
     </>
   );
 };

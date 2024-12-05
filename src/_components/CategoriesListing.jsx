@@ -115,7 +115,7 @@ const CategoriesListing = () => {
   };
 
   return (
-    <>
+    <div className="bg-[#FFFDF4]">
       <h1 className="text-center uppercase font-bebas-neue text-[25px] font-bold leading-[78px] text-customRed">
         Select Your{" "}
         <span className="uppercase font-bebas-neue text-[25px] font-bold leading-[78px] text-customBlack">
@@ -139,7 +139,7 @@ const CategoriesListing = () => {
       </div>
       {/* filters */}
       {/* product listing */}
-      <div className="mt-3 mb-4 flex space-x-5 flex-wrap">
+      <div className="mt-3 mb-4 flex space-x-5 flex-wrap justify-center">
         {products?.map((curItem, index) => (
           <Link href={`products/${curItem?.id}`}>
             <CardComponentOne key={index} data={curItem} />
@@ -147,6 +147,7 @@ const CategoriesListing = () => {
         ))}
       </div>
       {/* product listing */}
+      <div className="flex justify-center">
       {!hideButton && (
         <CommonButton
           className="text-center bg-red-500 text-white px-6 py-2 rounded-full ml-2"
@@ -155,7 +156,8 @@ const CategoriesListing = () => {
           onClick={handleLoadMore}
         />
       )}
-    </>
+      </div>
+    </div>
   );
 };
 

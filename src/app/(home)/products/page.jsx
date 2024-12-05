@@ -6,7 +6,7 @@ const Products = () => {
   return (
     <div>
       <ProductsPageHeader />
-      <CategoriesListing />
+      <CategoriesListing/>
     </div>
   );
 };
