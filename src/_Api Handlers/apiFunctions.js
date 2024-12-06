@@ -9,6 +9,16 @@ export const METHODS = {
   delete: "DELETE",
 };
 
+export const cleanFilters = (filters) => {
+  return Object.keys(filters).reduce((acc, key) => {
+    if (filters[key]) {
+      acc[key] = encodeURIComponent(filters[key]); // Encode the value
+    }
+    return acc;
+  }, {});
+};
+
+
 export const callApi = async ({
   endPoint,
   method,
@@ -28,7 +38,13 @@ export const callApi = async ({
 
     switch (method) {
       case METHODS.get: {
-        const config = params ? { params: { ...params } } : {};
+        let cleanedParams;
+        // for removing empty key value pairs and for encoding
+        if (params) {
+          cleanedParams = cleanFilters(params);
+        }
+        const config = params ? { params: { ...cleanedParams } } : {};
+        // const config = params ? { params: { ...params } } : {};
         return await API_INSTANCE.get(endPoint, config);
       }
 

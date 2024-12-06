@@ -6,17 +6,17 @@ import { useForm } from "react-hook-form";
 import LocationField from "./_common/LocationField";
 import CommonButton from "./_common/CommonButton";
 
-const BillingDetailsSection = () => {
-  const formConfig = useForm();
-  const { handleSubmit } = formConfig;
-  const onSubmit = (values) => {
-    console.log(values, "billing details");
-  };
+const BillingDetailsSection = ({formConfig}) => {
+  // const formConfig = useForm();
+  // const { handleSubmit } = formConfig;
+  // const onSubmit = (values) => {
+  //   console.log(values, "billing details");
+  // };
   return (
     <>
     <h2 className="text-xl font-semibold">Billing Details</h2>
     <div className="font-sans w-full mx-auto p-6 bg-[#ffffff] shadow-md rounded-lg border">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      {/* <form onSubmit={handleSubmit(onSubmit)}> */}
         {/* Billing Details Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <CommonTextInput
@@ -78,7 +78,7 @@ const BillingDetailsSection = () => {
             placeholder="Enter Address"
             label="Address"
           />
-      </form>
+      {/* </form> */}
     </div>
     </>
   );

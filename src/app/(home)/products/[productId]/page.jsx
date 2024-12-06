@@ -9,22 +9,22 @@ import SingleProductDetail from "@/_components/SingleProductDetail";
 const RELATED_PRODUCTS = [
   {
     imageUrl: "/images/cardImage.png",
-    title: "Whole Grain bread",
+    name: "Whole Grain bread",
     price: 40,
   },
   {
     imageUrl: "/images/cardImage.png",
-    title: "Premium Cookies",
+    name: "Premium Cookies",
     price: 30,
   },
   {
     imageUrl: "/images/cardImage.png",
-    title: "Premium Bread",
+    name: "Premium Bread",
     price: 10,
   },
   {
     imageUrl: "/images/cardImage.png",
-    title: "Premium Cookies",
+    name: "Premium Cookies",
     price: 10,
   },
 ];

@@ -39,8 +39,9 @@ const SingleProductDetail = ({ rating = 3, reviews = 6 }) => {
           <CommonButton
             type="button"
             text={qt}
-            className={`bg-[#FF6363] w-[94px] h-[40px] mr-2 rounded-[7px] `}
-            // className={`bg-[${qt === selectedQuantity ? "#FF6363" :"#E7E7E7" }] w-[94px] h-[40px] mr-2 rounded-[7px] `}
+            // className={`bg-[#FF6363] w-[94px] h-[40px] mr-2 rounded-[7px] `}
+            className={`${qt === selectedQuantity ? "bg-[#FF6363]" : "bg-[#E7E7E7]"} w-[94px] h-[40px] mr-2 rounded-[7px]`}
+            onClick={()=> setSelectedQuantity(qt)}
           />
         ))}
       </div>

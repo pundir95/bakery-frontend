@@ -10,32 +10,32 @@ import { PRODUCT_ENDPOINT,CATEGORIES_ENDPOINT } from "@/_Api Handlers/endpoints"
 const DUMMY_CATEGORIES = [
   {
     img: "/images/category-image.png",
-    label: "Bread",
+    name: "Bread",
     value: "",
   },
   {
     img: "/images/category-image.png",
-    label: "Cookies",
+    name: "Cookies",
     value: "cookies",
   },
   {
     img: "/images/category-image.png",
-    label: "Macron",
+    name: "Macron",
     value: "macron",
   },
   {
     img: "/images/category-image.png",
-    label: "Pretzel",
+    name: "Pretzel",
     value: "pretzel",
   },
   {
     img: "/images/category-image.png",
-    label: "Cupcakes",
+    name: "Cupcakes",
     value: "cupcakes",
   },
   {
     img: "/images/category-image.png",
-    label: "Cakes",
+    name: "Cakes",
     value: "cakes",
   },
 ];
@@ -65,16 +65,16 @@ const DUMMY_PRODUCTS = [
     id: 4,
   },
 ];
-const onCategoryClick = (selectedCategory) => {
-  console.log(selectedCategory, "selectedCategory");
-};
 const CategoriesListing = () => {
   const [page, setPage] = useState(1);
   const [products, setProducts] = useState([]);
   const [hideButton, setHideButton] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState();
 
-  console.log(categories, "categories");
+  const onCategoryClick = (selectedCategory) => {
+    setCurrentCategory(selectedCategory);
+  };
 
   // const CategoryDataToMap = categories.slice(4,(products.length - 1))
 
@@ -83,7 +83,7 @@ const CategoriesListing = () => {
     callApi({
       endPoint:PRODUCT_ENDPOINT,
       method:METHODS.get,
-      params:{page:page}
+      params:{page:page,search:currentCategory}
     }).then((response)=>{
         setProducts((prev) => [...prev, ...(response?.data?.results || [])]);
         if (response?.data?.next === null) {
@@ -94,7 +94,7 @@ const CategoriesListing = () => {
     }).finally(()=>{
 
     })
-  }, [page]);
+  }, [page,currentCategory]);
 
   useEffect(() => {
     callApi({
@@ -128,7 +128,8 @@ const CategoriesListing = () => {
           <SingleCategory
             data={cat}
             key={index}
-            // onCategoryClick={onCategoryClick}
+            onCategoryClick={onCategoryClick}
+            currentCategory={currentCategory}
           />
         ))}
       </div>

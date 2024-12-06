@@ -29,13 +29,13 @@ const DELIVERY_DATES = [
     time: "Before 2 pm",
   },
 ];
-const DeliveryDetailsSection = () => {
+const DeliveryDetailsSection = ({formConfig}) => {
   const [deliveryDate, setDeliveryDate] = useState("");
-  const formConfig = useForm();
-  const { handleSubmit } = formConfig;
-  const onSubmit = (values) => {
-    console.log(values, "billing details");
-  };
+  // const formConfig = useForm();
+  // const { handleSubmit } = formConfig;
+  // const onSubmit = (values) => {
+  //   console.log(values, "billing details");
+  // };
   return (
     <>
     <h2 className="text-xl font-semibold">Delivery Details</h2>
