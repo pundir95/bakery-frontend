@@ -29,7 +29,7 @@ const NAV_LINKS = [
   },
   {
     label: "Support",
-    href: "/",
+    href: "/support",
   },
 ];
 const Navbar = () => {

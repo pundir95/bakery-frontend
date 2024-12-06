@@ -79,7 +79,7 @@ const CardComponentOne = ({ data, showButtons = false }) => {
             <div className="flex flex items-center justify-between">
               <div className="text-black font-semibold text-sm">{name}</div>
               <div className="font-semibold" style={{ color: "#FF2F2F" }}>
-                ${data?.product_detail?.inventory?.regular_price}
+                ${data?.product_detail?.inventory?.regular_price || price}
               </div>
             </div>
           </div>
