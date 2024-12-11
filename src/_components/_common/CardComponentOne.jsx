@@ -24,11 +24,15 @@ const CardComponentOne = ({ data, showButtons = false }) => {
 
   const handleCart = (event, payload) => {
     event.stopPropagation();
+    console.log(payload,'payloadskfdjksdjf');
 
     callApi({
       endPoint: ADD_TO_CART,
       method: "POST",
-      payload: payload,
+      payload: {
+        "product_variant": payload.id,
+        "quantity": 1
+      },
     })
       .then((res) => {
         toastMessage("Product added successfully");
@@ -96,7 +100,7 @@ const CardComponentOne = ({ data, showButtons = false }) => {
           </button>
           <button
             className="p-3 bg-red-500 text-white rounded-full"
-            onClick={handleCart}
+            onClick={(e) => handleCart(e,data)}
           >
             <Cart fill="white" />
           </button>
