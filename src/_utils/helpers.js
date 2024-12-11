@@ -54,5 +54,6 @@ export const manageUserAuthorization = ({
 };
 
 export const createPreview = (imagePreview) => {
-  return `${baseURL}${imagePreview}`;
+  const newPreview = imagePreview.substring(1)
+  return `${baseURL}${newPreview}`;
 };

@@ -1,10 +1,13 @@
-import React from "react";
+"use client"
+import React,{useState,useEffect} from "react";
 import CardComponentOne from "@/_components/_common/CardComponentOne";
 import SingleProductHeader from "@/_components/SingleProductHeader";
 import Image from "next/image";
 import RatingComponent from "@/_components/RatingComponent";
 import ProductCarousel from "@/_components/ProductCarousel";
 import SingleProductDetail from "@/_components/SingleProductDetail";
+import { PRODUCT_ENDPOINT } from "@/_Api Handlers/endpoints";
+import { callApi } from "@/_Api Handlers/apiFunctions";
 
 const RELATED_PRODUCTS = [
   {
@@ -38,15 +41,35 @@ const IMAGES = [
 const SingleProductPage = ({ params }) => {
   // could be a specific product name
   const { productId } = params;
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    console.log('useEffect klsdjfs')
+    callApi({
+      endPoint: `${PRODUCT_ENDPOINT}${productId}`,
+      method: "GET",
+    })
+      .then((res) => {
+        // toastMessage("Product added successfully");
+        console.log(res,"klsdjf");
+        setProduct(res.data);
+        // setCount(res?.data?.product_detail?.advanced?.min_order_quantity ? res?.data?.product_detail?.advanced?.min_order_quantity : 1)
+        // setMinQuantity(res?.data?.product_detadvil?.advanced?.min_order_quantity? res?.data?.product_detail?.advanced?.min_order_quantity : 1)
+      })
+      .catch((error) => {
+        console.error("Error adding to cart:", error);
+      });  
+  },[])
+
   return (
     <div>
       <SingleProductHeader />
       <div className="product-info">
         {/* carousel */}
-        <ProductCarousel images={IMAGES} />
+        <ProductCarousel images={product?.images} />
         {/* <div className="product-carousel">Product carousel</div> */}
         <div className="single-product-detail">
-          <SingleProductDetail />
+          <SingleProductDetail product={product}/>
         </div>
       </div>
       {/* related product section */}
