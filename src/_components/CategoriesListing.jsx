@@ -142,9 +142,9 @@ const CategoriesListing = () => {
       {/* product listing */}
       <div className="mt-3 mb-4 flex space-x-5 flex-wrap justify-center">
         {products?.map((curItem, index) => (
-          <Link href={`products/${curItem?.id}`}>
+          // <Link href={`products/${curItem?.id}`}>
             <CardComponentOne key={index} data={curItem} />
-          </Link>
+          // </Link>
         ))}
       </div>
       {/* product listing */}

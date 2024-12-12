@@ -9,6 +9,8 @@ import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 import Cookies from "js-cookie";
 import { manageUserAuthorization } from "@/_utils/helpers";
 import { useRouter } from "next/navigation";
+import Cart from "../../public/icons/cart";
+import { useSelector } from "react-redux";
 
 const NAV_LINKS = [
   {
@@ -38,7 +40,7 @@ const Navbar = () => {
   const token = Cookies.get("token");
   const firstName = Cookies.get("firstName");
   const lastName = Cookies.get("lastName");
-  const name = `${firstName} ${lastName}`
+  const name = `${firstName} ${lastName}`;
 
   // const handleLogout = () => {
   //   const payload = {};
@@ -53,8 +55,9 @@ const Navbar = () => {
   //     });
   // };
 
-  const handleLogout = () => {
+  const cartItemsCount = useSelector((state) => state.cart.items.length);
 
+  const handleLogout = () => {
     // const values = {
     //   token: token,
     // };
@@ -106,6 +109,14 @@ const Navbar = () => {
           <div className="logout flex gap-4 text-black">
             <p>{name}</p>
             <CommonButton type="button" text="logout" onClick={handleLogout} />
+            <Link href="/billing">
+            <div className="relative">
+              <Cart fill="#000000" />
+              <div className="absolute bottom-4 left-5 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
+                {cartItemsCount}
+              </div>
+            </div>
+            </Link>
           </div>
         ) : (
           <div className="space-x-4">

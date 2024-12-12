@@ -16,7 +16,7 @@ const SingleProductDetail = ({ rating = 3, reviews = 6, product }) => {
   const formConfig = useForm();
   const [count, setCount] = useState(1);
   const [showDescription, setShowDescription] = useState(false);
-  const [selectedQuantity, setSelectedQuantity] = useState("100gm");
+  const [selectedQuantity, setSelectedQuantity] = useState("");
  
   const params = useParams();
   const productId = params?.productId;
@@ -41,7 +41,7 @@ const SingleProductDetail = ({ rating = 3, reviews = 6, product }) => {
       endPoint: ADD_TO_CART,
       method: "POST",
       payload: {
-        "product_variant": payload.id,
+        "product_variant": selectedQuantity?.inventory?.id,
         "quantity": count
       },
     })

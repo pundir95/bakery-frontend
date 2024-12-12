@@ -33,9 +33,9 @@ const RELATED_PRODUCTS = [
 ];
 
 const IMAGES = [
-  "/images/cardImage.png",
-  "/images/bread.png",
-  "/images/donut-hero.png",
+  {image: "/images/cardImage.png"},
+  {image: "/images/bread.png"},
+  {image: "/images/donut-hero.png"},
 ];
 
 const SingleProductPage = ({ params }) => {
@@ -66,7 +66,7 @@ const SingleProductPage = ({ params }) => {
       <SingleProductHeader />
       <div className="product-info">
         {/* carousel */}
-        <ProductCarousel images={product?.images} />
+        <ProductCarousel images={product?.images ? product?.images : IMAGES} />
         {/* <div className="product-carousel">Product carousel</div> */}
         <div className="single-product-detail">
           <SingleProductDetail product={product}/>

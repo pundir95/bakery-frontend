@@ -1,3 +1,5 @@
+"use client";
+import { createPreview } from "@/_utils/helpers";
 import React,{useState} from "react";
 
 const SummarySection = ({summaryProducts}) => {
@@ -48,16 +50,16 @@ const SummarySection = ({summaryProducts}) => {
 
         <div className="">
           <ul className="space-y-4">
-            {summaryProducts?.map((item) => (
+            {summaryProducts.length ?  summaryProducts?.map((item) => (
               <li key={item.id} className="flex items-center">
                 <img
-                  src={item.img}
+                  src={createPreview(item?.feature_image?.image)}
                   alt="Premium Croissant"
                   className="w-12 h-12 rounded mr-4"
                 />
                 <div className="flex-grow">
                   <p className="font-medium text-black">{item.name}</p>
-                  <p className="text-sm text-[#FF6363]">${item.price}.00</p>
+                  <p className="text-sm text-[#FF6363]">${item?.product_detail?.inventory?.regular_price}.00</p>
                 </div>
                 {/* <p className="font-medium text-black">$120.00</p> */}
                 <div className="flex bg-white border flex-col items-center px-1 rounded-md border-black">
@@ -70,7 +72,7 @@ const SummarySection = ({summaryProducts}) => {
                   </button>
                 </div>
               </li>
-            ))}
+            )) : <div className="text-black">No items</div>}
           </ul>
         </div>
 

@@ -1,16 +1,39 @@
 "use client";
 
+import { callApi } from "@/_Api Handlers/apiFunctions";
+import { GET_CART } from "@/_Api Handlers/endpoints";
 import BillingDetailsSection from "@/_components/BillingDetailsSection";
 import DeliveryDetailsSection from "@/_components/DeliveryDetailsSection";
 import SavedAddresses from "@/_components/SavedAddress";
 import SummarySection from "@/_components/SummarySection";
-import React, { useState } from "react";
+import { toastMessage } from "@/_utils/toastMessage";
+import React, { useState,useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector, useDispatch } from "react-redux";
 
 const BillingDetails = () => {
   const [showAddressForm, setShowAddressForm] = useState(false);
   const formConfig = useForm();
   const { handleSubmit } = formConfig;
+
+  const cartItems = useSelector((state) => state.cart.items);
+
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    callApi({
+      endPoint: GET_CART,
+      method: "GET",
+    })
+      .then((res) => {
+        console.log(res);
+        // toastMessage("Product added successfully");
+      })
+      .catch((error) => {
+        console.error("Error adding to cart:", error);
+      });
+  },[]);
+
   const onSubmit = (values) => {
     console.log(values, "billing details=====================>>>>>>>>>>>>>>>");
   };
@@ -56,7 +79,7 @@ const BillingDetails = () => {
           <SavedAddresses handleAddNew={handleAddNew} />
         )}
       </div>
-      <SummarySection summaryProducts={summaryProducts}/>
+      <SummarySection summaryProducts={cartItems}/>
     </div>
     </form>
   );

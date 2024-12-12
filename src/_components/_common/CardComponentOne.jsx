@@ -11,6 +11,8 @@ import { createPreview } from "@/_utils/helpers";
 import Heart from "../../../public/icons/heart";
 import Cart from "../../../public/icons/cart";
 import Eye from "../../../public/icons/eye";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../../redux/cartSlice";
 
 const CardComponentOne = ({ data, showButtons = false }) => {
   console.log(data, "this is data");
@@ -19,12 +21,19 @@ const CardComponentOne = ({ data, showButtons = false }) => {
   const { title, imageUrl, price, name } = data;
 
   const pathName = usePathname();
+  const dispatch = useDispatch();
 
   const isProductsPage = pathName === "/products";
 
   const handleCart = (event, payload) => {
     event.stopPropagation();
     console.log(payload,'payloadskfdjksdjf');
+    dispatch(addItem({
+      id: payload.id,
+      name: payload.name,
+      price: payload.price,
+      imageUrl: payload.imageUrl,
+    }));
 
     callApi({
       endPoint: ADD_TO_CART,
@@ -35,6 +44,12 @@ const CardComponentOne = ({ data, showButtons = false }) => {
       },
     })
       .then((res) => {
+        // dispatch(addItem({
+        //   id: payload.id,
+        //   name: payload.name,
+        //   price: payload.price,
+        //   imageUrl: payload.imageUrl,
+        // }));
         toastMessage("Product added successfully");
       })
       .catch((error) => {

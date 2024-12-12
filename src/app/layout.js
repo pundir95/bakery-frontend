@@ -3,6 +3,7 @@ import "./globals.css";
 import Head from "next/head"; // Import Head
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import StoreProvider from "../../redux/storeProvider";
 
 
 const geistSans = localFont({
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
         />
       </Head>
+      <StoreProvider>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -49,6 +51,7 @@ export default function RootLayout({ children }) {
         />
         {children}
       </body>
+      </StoreProvider>
     </html>
   );
 }

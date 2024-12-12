@@ -21,7 +21,7 @@ const ProductCarousel = ({ images }) => {
         {images?.length && images?.map((image, index) => (
           <img
             key={index}
-            src={createPreview(image.image)}
+            src={createPreview(image?.image)}
             alt={`Thumbnail ${index}`}
             onClick={() => setActiveIndex(index)}
             className={`w-20 h-20 object-cover rounded-md border-2 cursor-pointer ${
