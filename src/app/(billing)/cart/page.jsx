@@ -5,7 +5,7 @@ import React from "react";
 const Cart = () => {
   return (
     <div>
-      <SummarySection />
+      {/* <SummarySection /> */}
       <div className="subtotal flex items-center space-x-4">Subtotal $1600</div>
       <div className="shipping-charges  flex items-center space-x-4">
         Shipping charges $50.00

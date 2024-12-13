@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const PRIVATE_ROUTES = ["/dashboard", "/profile"];
+const PRIVATE_ROUTES = ["/dashboard", "/profile","billing"];
 const PUBLIC_ROUTES = ["/login", "/sign-up"];
 const SHARED_ROUTES = ["/about-us", "/blog", "/home", "/"];
 
@@ -35,6 +35,7 @@ export const config = {
     "/sign-up",
     "/about-us",
     "/blog",
+    "/billing",
     "/",
   ], // Match the routes
 };

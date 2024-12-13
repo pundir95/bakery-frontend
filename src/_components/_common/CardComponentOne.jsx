@@ -11,6 +11,9 @@ import { createPreview } from "@/_utils/helpers";
 import Heart from "../../../public/icons/heart";
 import Cart from "../../../public/icons/cart";
 import Eye from "../../../public/icons/eye";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../../redux/cartSlice";
+import { INSTANCE } from "@/_Api Handlers/apiConfig";
 
 const CardComponentOne = ({ data, showButtons = false }) => {
   console.log(data, "this is data");
@@ -19,6 +22,7 @@ const CardComponentOne = ({ data, showButtons = false }) => {
   const { title, imageUrl, price, name } = data;
 
   const pathName = usePathname();
+  const dispatch = useDispatch();
 
   const isProductsPage = pathName === "/products";
 
@@ -29,13 +33,15 @@ const CardComponentOne = ({ data, showButtons = false }) => {
     callApi({
       endPoint: ADD_TO_CART,
       method: "POST",
+      instanceType:INSTANCE?.authorized,
       payload: {
         "product_variant": payload.id,
         "quantity": 1
       },
     })
       .then((res) => {
-        toastMessage("Product added successfully");
+        dispatch(addItem(res.data));
+        toastMessage("Product added successfully","success");
       })
       .catch((error) => {
         console.error("Error adding to cart:", error);

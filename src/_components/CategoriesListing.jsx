@@ -6,7 +6,12 @@ import CardComponentOne from "./_common/CardComponentOne";
 import CommonButton from "./_common/CommonButton";
 import Link from "next/link";
 import { callApi, METHODS } from "@/_Api Handlers/apiFunctions";
-import { PRODUCT_ENDPOINT,CATEGORIES_ENDPOINT } from "@/_Api Handlers/endpoints";
+import {
+  PRODUCT_ENDPOINT,
+  CATEGORIES_ENDPOINT,
+} from "@/_Api Handlers/endpoints";
+import { useRouter } from "next/navigation";
+
 const DUMMY_CATEGORIES = [
   {
     img: "/images/category-image.png",
@@ -72,42 +77,45 @@ const CategoriesListing = () => {
   const [categories, setCategories] = useState([]);
   const [currentCategory, setCurrentCategory] = useState();
 
+  const router = useRouter();
+
   const onCategoryClick = (selectedCategory) => {
     setCurrentCategory(selectedCategory);
   };
 
   // const CategoryDataToMap = categories.slice(4,(products.length - 1))
 
-
   useEffect(() => {
     callApi({
-      endPoint:PRODUCT_ENDPOINT,
-      method:METHODS.get,
-      params:{page:page,search:currentCategory}
-    }).then((response)=>{
+      endPoint: PRODUCT_ENDPOINT,
+      method: METHODS.get,
+      params: { page: page, search: currentCategory },
+    })
+      .then((response) => {
         setProducts((prev) => [...prev, ...(response?.data?.results || [])]);
         if (response?.data?.next === null) {
-                setHideButton(true);
-              }
-    }).catch((err)=>{
-      console.error("Error fetching products:", err);
-    }).finally(()=>{
-
-    })
-  }, [page,currentCategory]);
+          setHideButton(true);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching products:", err);
+      })
+      .finally(() => {});
+  }, [page, currentCategory]);
 
   useEffect(() => {
     callApi({
-      endPoint:CATEGORIES_ENDPOINT,
-      method:METHODS.get,
-      params:{page:1}
-    }).then((response)=>{
-        setCategories(response?.data?.results);
-    }).catch((err)=>{
-      console.error("Error fetching products:", err);
-    }).finally(()=>{
-
+      endPoint: CATEGORIES_ENDPOINT,
+      method: METHODS.get,
+      params: { page: 1 },
     })
+      .then((response) => {
+        setCategories(response?.data?.results);
+      })
+      .catch((err) => {
+        console.error("Error fetching products:", err);
+      })
+      .finally(() => {});
   }, []);
 
   const handleLoadMore = () => {
@@ -142,21 +150,21 @@ const CategoriesListing = () => {
       {/* product listing */}
       <div className="mt-3 mb-4 flex space-x-5 flex-wrap justify-center">
         {products?.map((curItem, index) => (
-          <Link href={`products/${curItem?.id}`}>
+          <div onClick={() => router.push(`/products/${curItem.id}`)}>
             <CardComponentOne key={index} data={curItem} />
-          </Link>
+          </div>
         ))}
       </div>
       {/* product listing */}
       <div className="flex justify-center">
-      {!hideButton && (
-        <CommonButton
-          className="text-center bg-red-500 text-white px-6 py-2 rounded-full ml-2"
-          text="Load More"
-          type="button"
-          onClick={handleLoadMore}
-        />
-      )}
+        {!hideButton && (
+          <CommonButton
+            className="text-center bg-red-500 text-white px-6 py-2 rounded-full ml-2"
+            text="Load More"
+            type="button"
+            onClick={handleLoadMore}
+          />
+        )}
       </div>
     </div>
   );
