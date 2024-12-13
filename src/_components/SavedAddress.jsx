@@ -1,22 +1,22 @@
-const SavedAddresses = ({ handleAddNew }) => {
-  const addresses = [
-    {
-      address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden",
-      time: "39 Mins",
-    },
-    {
-      address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden",
-      time: "45 Mins",
-    },
-    {
-      address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden",
-      time: "19 Mins",
-    },
-    {
-      address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden",
-      time: "22 Mins",
-    },
-  ];
+const SavedAddresses = ({ handleAddNew,addresses,handleAddress}) => {
+  // const addresses = [
+  //   {
+  //     address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden",
+  //     time: "39 Mins",
+  //   },
+  //   {
+  //     address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden",
+  //     time: "45 Mins",
+  //   },
+  //   {
+  //     address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden",
+  //     time: "19 Mins",
+  //   },
+  //   {
+  //     address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden",
+  //     time: "22 Mins",
+  //   },
+  // ];
 
   return (
     <div className="p-4">
@@ -38,13 +38,13 @@ const SavedAddresses = ({ handleAddNew }) => {
               className="border rounded-lg p-4 justify-between items-center shadow-sm"
             >
               <div>
-                <p className="text-sm font-medium">{item.address}</p>
+                <p className="text-sm font-medium">{`${item.address},${item.city},${item.state}`}</p>
               </div>
               <div className="text-right flex justify-between items-center mt-2">
-                <button className="bg-red-500 text-white px-2 py-2 rounded-md" type="button">
+                <button className="bg-red-500 text-white px-2 py-2 rounded-md" type="button" onClick={()=>handleAddress(item)}>
                   Deliver Here
                 </button>
-                <div className="text-xs text-gray-500 mb-2">{item.time}</div>
+                <div className="text-xs text-gray-500 mb-2">{item.time ? item.time : "45 Mins"}</div>
               </div>
             </div>
           ))}

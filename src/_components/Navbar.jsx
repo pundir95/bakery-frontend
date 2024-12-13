@@ -57,6 +57,7 @@ const Navbar = () => {
 
   const cartItemsCount = useSelector((state) => state.cart.items.length);
 
+  console.log(useSelector((state) => state.cart.items),"kjkfdjskldfcart");
   const handleLogout = () => {
     // const values = {
     //   token: token,
@@ -109,14 +110,12 @@ const Navbar = () => {
           <div className="logout flex gap-4 text-black">
             <p>{name}</p>
             <CommonButton type="button" text="logout" onClick={handleLogout} />
-            <Link href="/billing">
-            <div className="relative">
+            <div className="relative" onClick={() => router.push(`/billing`)}>
               <Cart fill="#000000" />
               <div className="absolute bottom-4 left-5 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
                 {cartItemsCount}
               </div>
             </div>
-            </Link>
           </div>
         ) : (
           <div className="space-x-4">

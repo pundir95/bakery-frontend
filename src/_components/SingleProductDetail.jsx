@@ -11,6 +11,8 @@ import { callApi } from "@/_Api Handlers/apiFunctions";
 const quantities = ["100gm", "150gm", "200gm"];
 import { useParams } from "next/navigation";
 import { toastMessage } from "@/_utils/toastMessage";
+import { addItem } from "../../redux/cartSlice";
+import { useDispatch } from "react-redux";
 
 const SingleProductDetail = ({ rating = 3, reviews = 6, product }) => {
   const formConfig = useForm();
@@ -20,6 +22,8 @@ const SingleProductDetail = ({ rating = 3, reviews = 6, product }) => {
  
   const params = useParams();
   const productId = params?.productId;
+
+  const dispatch = useDispatch();
 
   const minQuantity = product?.product_detail?.advanced?.min_order_quantity ? product?.product_detail?.advanced?.min_order_quantity : 1
 
@@ -36,6 +40,10 @@ const SingleProductDetail = ({ rating = 3, reviews = 6, product }) => {
   const handleCart = (payload) => {
     // event.stopPropagation();
     console.log(payload,'payloadskfdjksdjf');
+    if(!selectedQuantity?.inventory?.id){
+      toastMessage("Please select a valid quantity", "error");
+      return;
+    }
 
     callApi({
       endPoint: ADD_TO_CART,
@@ -46,7 +54,8 @@ const SingleProductDetail = ({ rating = 3, reviews = 6, product }) => {
       },
     })
       .then((res) => {
-        toastMessage("Product added successfully");
+        dispatch(addItem(res.data));
+        toastMessage("Product added successfully",Success);
       })
       .catch((error) => {
         console.error("Error adding to cart:", error);

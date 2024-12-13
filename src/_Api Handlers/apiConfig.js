@@ -29,9 +29,10 @@ const createAuthorizedInstance = (type) => {
   });
 
   APIAxios.interceptors.request.use((config) => {
-    const token = Cookies.get("token")
-      ? `Bearer ${Cookies.get("token")("token")}`
-      : "Token";
+    // const token = Cookies.get("token")
+    //   ? `Bearer ${Cookies.get("token")("token")}`
+    //   : "Token";
+    const token = Cookies.get("token") ? `Bearer ${Cookies.get("token")}` : "Token";
     config.headers["content-type"] =
       type === MULTIPART ? "multipart/form-data" : "application/json";
     config.headers["Authorization"] = token;

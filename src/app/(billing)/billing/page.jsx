@@ -1,7 +1,8 @@
 "use client";
 
+import { INSTANCE } from "@/_Api Handlers/apiConfig";
 import { callApi } from "@/_Api Handlers/apiFunctions";
-import { GET_CART } from "@/_Api Handlers/endpoints";
+import { CHECKOUT, GET_ADDRESS, GET_CART } from "@/_Api Handlers/endpoints";
 import BillingDetailsSection from "@/_components/BillingDetailsSection";
 import DeliveryDetailsSection from "@/_components/DeliveryDetailsSection";
 import SavedAddresses from "@/_components/SavedAddress";
@@ -13,26 +14,45 @@ import { useSelector, useDispatch } from "react-redux";
 
 const BillingDetails = () => {
   const [showAddressForm, setShowAddressForm] = useState(false);
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState();
   const formConfig = useForm();
   const { handleSubmit } = formConfig;
 
-  const cartItems = useSelector((state) => state.cart.items);
-
   const dispatch = useDispatch();
+
+
+  useEffect(()=>{
+    callApi({
+      endPoint: GET_ADDRESS,
+      method: "GET",
+      instanceType:INSTANCE?.authorized
+    })
+      .then((res) => {
+        console.log(res,'RESPONSE OF ADDRESS dsfadfdsfdf');
+        setAddresses(res?.data?.results)
+      })
+      .catch((error) => {
+        console.error("Error getting address:", error);
+      });
+  },[])
 
   useEffect(()=>{
     callApi({
       endPoint: GET_CART,
       method: "GET",
+      instanceType: INSTANCE?.authorized,
     })
       .then((res) => {
-        console.log(res);
-        // toastMessage("Product added successfully");
-      })
+        if (res?.data?.items?.length > 0) {
+          res.data.items.forEach((item) => {
+            dispatch(addItem( item ));
+          });
+      }})
       .catch((error) => {
         console.error("Error adding to cart:", error);
       });
-  },[]);
+},[]);
 
   const onSubmit = (values) => {
     console.log(values, "billing details=====================>>>>>>>>>>>>>>>");
@@ -66,6 +86,33 @@ const BillingDetails = () => {
     setShowAddressForm(true);
   };
 
+  const handleAddress = (item) =>{
+    setSelectedAddress(item)
+  }
+
+  const handleCheckout = () => {
+    if(!selectedAddress){
+      toastMessage("Please select address", "error");
+      return
+    }
+    callApi({
+      endPoint: CHECKOUT,
+      method: "POST",
+      instanceType:INSTANCE?.authorized
+    })
+      .then((res) => {
+        console.log(res);
+        toastMessage("Order placed successfully", "success");
+      })
+      .catch((error) => {
+        console.error("Error adding to cart:", error);
+      });
+    
+    setSelectedAddress(null);
+  }
+
+  const cartItems = useSelector((state) => state.cart.items);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
     <div className="flex gap-6 p-6">
@@ -76,10 +123,10 @@ const BillingDetails = () => {
             <DeliveryDetailsSection formConfig={formConfig}/>
           </>
         ) : (
-          <SavedAddresses handleAddNew={handleAddNew} />
+          <SavedAddresses handleAddNew={handleAddNew} addresses={addresses} handleAddress={handleAddress}/>
         )}
       </div>
-      <SummarySection summaryProducts={cartItems}/>
+      <SummarySection summaryProducts={cartItems} handleCheckout={handleCheckout}/>
     </div>
     </form>
   );

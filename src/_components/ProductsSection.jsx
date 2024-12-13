@@ -3,7 +3,13 @@ import React, { useState, useEffect } from "react";
 import CardComponentOne from "./_common/CardComponentOne";
 import Link from "next/link";
 import { callApi, METHODS } from "@/_Api Handlers/apiFunctions";
-import { PRODUCT_ENDPOINT } from "@/_Api Handlers/endpoints";
+import { GET_CART, PRODUCT_ENDPOINT } from "@/_Api Handlers/endpoints";
+import { useRouter } from "next/navigation";
+import { INSTANCE } from "@/_Api Handlers/apiConfig";
+import { addItem } from "../../redux/cartSlice";
+import { useDispatch } from "react-redux";
+
+
 const DUMMY_DATA = [
   {
     imageUrl: "/images/cardImage.png",
@@ -30,6 +36,8 @@ const DUMMY_DATA = [
 const ProductsSection = () => {
   const [products, setProducts] = useState([]);
 
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     callApi({
@@ -44,6 +52,22 @@ const ProductsSection = () => {
         console.error("Error fetching products:", err);
       })
       .finally(() => {});
+
+    callApi({
+      endPoint: GET_CART,
+      method: "GET",
+      instanceType: INSTANCE?.authorized,
+    })
+      .then((res) => {
+        if (res?.data?.items?.length > 0) {
+          res.data.items.forEach((item) => {
+            dispatch(addItem( item ));
+          });
+        // toastMessage("Product added successfully");
+      }})
+      .catch((error) => {
+        console.error("Error adding to cart:", error);
+      });
   }, []);
 
   return (
@@ -59,11 +83,19 @@ const ProductsSection = () => {
         {products.length > 0 ? (
           <div className="flex space-x-5 justify-center flex-wrap">
             {products?.map((curItem, index) => (
-              <CardComponentOne key={index} data={curItem} showButtons={true} />
+              <div onClick={() => router.push(`/products/${curItem.id}`)}>
+                <CardComponentOne
+                  key={index}
+                  data={curItem}
+                  showButtons={true}
+                />
+              </div>
             ))}
           </div>
         ) : (
-          <div className="text-black font-bold text-xl flex justify-center">loading...</div>
+          <div className="text-black font-bold text-xl flex justify-center">
+            loading...
+          </div>
         )}
         <div className="text-center mt-10">
           <Link

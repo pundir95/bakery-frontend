@@ -2,7 +2,7 @@
 import { createPreview } from "@/_utils/helpers";
 import React,{useState} from "react";
 
-const SummarySection = ({summaryProducts}) => {
+const SummarySection = ({summaryProducts,handleCheckout}) => {
   const [quantities, setQuantities] = useState(
     summaryProducts?.reduce((acc, item) => {
       acc[item.id] = item.quantity;
@@ -94,7 +94,7 @@ const SummarySection = ({summaryProducts}) => {
           <span className="font-bold text-lg text-[#FF6363]">${total.toFixed(2)}</span>
         </div>
 
-        <button className="mt-5 bg-red-500 text-white font-bold py-2 rounded-lg hover:bg-red-600 transition duration-200 w-full" type="submit">
+        <button className="mt-5 bg-red-500 text-white font-bold py-2 rounded-lg hover:bg-red-600 transition duration-200 w-full" type="submit" onClick={handleCheckout}>
           Confirm Order
         </button>
       </div>
