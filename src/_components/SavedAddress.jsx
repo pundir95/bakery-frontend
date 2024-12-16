@@ -1,4 +1,14 @@
-const SavedAddresses = ({ handleAddNew,addresses,handleAddress}) => {
+"use client";
+import React, { useState } from "react";
+const SavedAddresses = ({
+  handleAddNew,
+  addresses,
+  handleAddress,
+  coupon,
+  handleApplyCoupon,
+}) => {
+  const [showAllCoupons, setShowAllCoupons] = useState(false);
+  const [enteredCoupon, setEnteredCoupon] = useState("");
   // const addresses = [
   //   {
   //     address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden",
@@ -17,6 +27,20 @@ const SavedAddresses = ({ handleAddNew,addresses,handleAddress}) => {
   //     time: "22 Mins",
   //   },
   // ];
+
+  const handleSeeAllOffers = () => {
+    setShowAllCoupons(!showAllCoupons);
+  };
+
+  const handleCouponChange = (event) => {
+    setEnteredCoupon(event.target.value);
+  };
+
+  const handleCouponApply = () => {
+    if (enteredCoupon) {
+      handleApplyCoupon(enteredCoupon);
+    }
+  };
 
   return (
     <div className="p-4">
@@ -41,10 +65,16 @@ const SavedAddresses = ({ handleAddNew,addresses,handleAddress}) => {
                 <p className="text-sm font-medium">{`${item.address},${item.city},${item.state}`}</p>
               </div>
               <div className="text-right flex justify-between items-center mt-2">
-                <button className="bg-red-500 text-white px-2 py-2 rounded-md" type="button" onClick={()=>handleAddress(item)}>
+                <button
+                  className="bg-red-500 text-white px-2 py-2 rounded-md"
+                  type="button"
+                  onClick={() => handleAddress(item)}
+                >
                   Deliver Here
                 </button>
-                <div className="text-xs text-gray-500 mb-2">{item.time ? item.time : "45 Mins"}</div>
+                <div className="text-xs text-gray-500 mb-2">
+                  {item.time ? item.time : "45 Mins"}
+                </div>
               </div>
             </div>
           ))}
@@ -55,25 +85,47 @@ const SavedAddresses = ({ handleAddNew,addresses,handleAddress}) => {
       <div className="p-4 border mt-4 rounded-lg">
         <div className="flex justify-between mb-2">
           <div className="text-lg font-semibold">Available Coupon</div>
-          <div className="text-[#FF6363] cursor-pointer">See all offers</div>
-        </div>
-        <div className="border rounded-lg p-2 mb-4 flex justify-between items-center shadow-sm bg-[#FFFAF4] border-[#FF6363]">
-          <div>
-            <p className="text-sm font-medium">
-              Flat 10% on your First Purchase. FLAT10
-            </p>
+          <div
+            className="text-[#FF6363] cursor-pointer"
+            onClick={handleSeeAllOffers}
+          >
+            {showAllCoupons ? "See fewer offers" : "See all offers"}
           </div>
-          <button className="text-white px-6 py-1 rounded-lg border bg-[#FF6363]" type="button">
-            Apply
-          </button>
         </div>
+        {(showAllCoupons ? coupon : coupon.slice(0, 1)).map((coup, index) => (
+          <div
+            className="border rounded-lg p-2 mb-4 flex justify-between items-center shadow-sm bg-[#FFFAF4] border-[#FF6363]"
+            key={index}
+          >
+            <div>
+              <p className="text-sm font-medium">
+                {coup?.coupon_details?.discount_types === "amount"
+                  ? `Flat $${coup?.coupon_details?.discount_value} off on your purchase. ${coup?.coupon_details?.code}`
+                  : `Flat ${coup?.coupon_details?.discount_value}% off on your purchase. ${coup?.coupon_details?.code}`}
+              </p>
+            </div>
+            <button
+              className="text-white px-6 py-1 rounded-lg border bg-[#FF6363]"
+              type="button"
+              onClick={() => handleApplyCoupon(coup?.coupon_details?.code)}
+            >
+              Apply
+            </button>
+          </div>
+        ))}
         <div className="flex items-center gap-4">
           <input
             type="text"
             placeholder="Enter Coupon"
             className="border rounded-lg p-2 flex-1 focus:outline-none focus:ring-2 focus:ring-pink-500"
+            value={enteredCoupon}
+            onChange={handleCouponChange}
           />
-          <button className="bg-[#FF6363] text-white px-6 py-2 rounded-lg" type="button">
+          <button
+            className="bg-[#FF6363] text-white px-6 py-2 rounded-lg"
+            type="button"
+            onClick={handleCouponApply}
+          >
             Apply
           </button>
         </div>
