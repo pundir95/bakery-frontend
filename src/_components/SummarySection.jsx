@@ -1,14 +1,17 @@
 "use client";
 import { createPreview } from "@/_utils/helpers";
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 
-const SummarySection = ({summaryProducts,handleCheckout}) => {
-  const [quantities, setQuantities] = useState(
-    summaryProducts?.reduce((acc, item) => {
+const SummarySection = ({summaryProducts}) => {
+  const [quantities, setQuantities] = useState({});
+
+  useEffect(() => {
+    const initialQuantities = summaryProducts.reduce((acc, item) => {
       acc[item.id] = item.quantity;
       return acc;
-    }, {})
-  );
+    }, {});
+    setQuantities(initialQuantities);
+  }, [summaryProducts]);
 
   const handleQuantityChange = (id, type) => {
     setQuantities((prevQuantities) => {
@@ -21,12 +24,12 @@ const SummarySection = ({summaryProducts,handleCheckout}) => {
   };
 
   const calculateSubtotal = () => {
-    return summaryProducts.reduce(
-      (total, item) => total + item.price * quantities[item.id],
-      0
-    );
+    return summaryProducts.reduce((total, item) => {
+      const quantity = quantities[item.id] || item.quantity;
+      return total + parseFloat(item.product_variant.inventory.regular_price) * quantity;
+    }, 0);
   };
-
+  
   const calculateVAT = (subtotal) => {
     const VATPercentage = 0.05;
     return subtotal * VATPercentage;
@@ -52,14 +55,14 @@ const SummarySection = ({summaryProducts,handleCheckout}) => {
           <ul className="space-y-4">
             {summaryProducts.length ?  summaryProducts?.map((item) => (
               <li key={item.id} className="flex items-center">
-                <img
+                {/* <img
                   src={createPreview(item?.feature_image?.image)}
                   alt="Premium Croissant"
                   className="w-12 h-12 rounded mr-4"
-                />
+                /> */}
                 <div className="flex-grow">
-                  <p className="font-medium text-black">{item.name}</p>
-                  <p className="text-sm text-[#FF6363]">${item?.product_detail?.inventory?.regular_price}.00</p>
+                  <p className="font-medium text-black">{item?.product_variant?.name}</p>
+                  <p className="text-sm text-[#FF6363]">${item?.product_variant?.inventory?.regular_price}.00</p>
                 </div>
                 {/* <p className="font-medium text-black">$120.00</p> */}
                 <div className="flex bg-white border flex-col items-center px-1 rounded-md border-black">
@@ -94,7 +97,7 @@ const SummarySection = ({summaryProducts,handleCheckout}) => {
           <span className="font-bold text-lg text-[#FF6363]">${total.toFixed(2)}</span>
         </div>
 
-        <button className="mt-5 bg-red-500 text-white font-bold py-2 rounded-lg hover:bg-red-600 transition duration-200 w-full" type="submit" onClick={handleCheckout}>
+        <button className="mt-5 bg-red-500 text-white font-bold py-2 rounded-lg hover:bg-red-600 transition duration-200 w-full" type="submit">
           Confirm Order
         </button>
       </div>

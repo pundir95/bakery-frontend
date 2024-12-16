@@ -52,4 +52,29 @@ export const STATE_OPTIONS = [
     { label: "West Virginia", value: "WV" },
     { label: "Wisconsin", value: "WI" },
     { label: "Wyoming", value: "WY" }
-  ];  
+  ];
+  
+  export const SWEDEN_COUNTY_OPTIONS = [
+    { label: "Stockholm", value: "Stockholm" },
+    { label: "Västernorrland", value: "Västernorrland" },
+    { label: "Västmanland", value: "Västmanland" },
+    { label: "Västra Götaland", value: "Västra Götaland" },
+    { label: "Östergötland", value: "Östergötland" },
+    { label: "Dalarna", value: "Dalarna" },
+    { label: "Gävleborg", value: "Gävleborg" },
+    { label: "Gotland", value: "Gotland" },
+    { label: "Halland", value: "Halland" },
+    { label: "Jämtland", value: "Jämtland" },
+    { label: "Jönköping", value: "Jönköping" },
+    { label: "Kalmar", value: "Kalmar" },
+    { label: "Kristianstad", value: "Kristianstad" },
+    { label: "Kopparberg", value: "Kopparberg" },
+    { label: "Skåne", value: "Skåne" },
+    { label: "Södermanland", value: "Södermanland" },
+    { label: "Uppsala", value: "Uppsala" },
+    { label: "Värmland", value: "Värmland" },
+    { label: "Västerbotten", value: "Västerbotten" },
+    { label: "Blekinge", value: "Blekinge" },
+    { label: "Nordmaling", value: "Nordmaling" },
+    { label: "Örebro", value: "Örebro" },
+  ];

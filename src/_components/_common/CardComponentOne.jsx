@@ -40,6 +40,10 @@ const CardComponentOne = ({ data, showButtons = false }) => {
       },
     })
       .then((res) => {
+        if(res.data.error){
+          toastMessage(res.data.error, "error");
+          return;
+        }
         dispatch(addItem(res.data));
         toastMessage("Product added successfully","success");
       })

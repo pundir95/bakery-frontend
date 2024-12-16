@@ -5,6 +5,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import LocationField from "./_common/LocationField";
 import CommonButton from "./_common/CommonButton";
+import { SWEDEN_COUNTY_OPTIONS } from "@/_constants/constant";
+import CommonSelect from "@/_form-fields/CommonSelect";
 
 const BillingDetailsSection = ({formConfig}) => {
   // const formConfig = useForm();
@@ -42,19 +44,40 @@ const BillingDetailsSection = ({formConfig}) => {
             rules={BillingDetailsValidations?.["email"]}
             label="Email"
           />
-          <CommonTextInput
+          {/* <CommonTextInput
             formConfig={formConfig}
             placeholder="Enter City"
             fieldName={"city"}
             rules={BillingDetailsValidations?.["city"]}
             label="City"
+          /> */}
+          <LocationField
+            fieldName="city"
+            formConfig={formConfig}
+            placeholder="Enter City"
+            label="City *"
+            rules={BillingDetailsValidations["city"]}
+            options={{
+              types: ["(cities)"],
+              componentRestrictions: { country: ["se"] },
+            }}
           />
-          <CommonTextInput
+          {/* <CommonTextInput
             formConfig={formConfig}
             placeholder="Enter State"
             fieldName={"state"}
             rules={BillingDetailsValidations?.["state"]}
             label="State"
+          /> */}
+          <CommonSelect
+            formConfig={formConfig}
+            label="State *"
+            selectType="react-select"
+            placeholder="Select State"
+            options={SWEDEN_COUNTY_OPTIONS}
+            fieldName="state"
+            rules={BillingDetailsValidations["state"]}
+            // className="add-edit-input"
           />
           <CommonTextInput
             formConfig={formConfig}
