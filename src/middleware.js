@@ -9,8 +9,8 @@ export function middleware(req) {
   const { pathname } = req.nextUrl;
   console.log(pathname, "pathname");
   // update (home route code)
-  if (pathname == "/home") {
-    return NextResponse.redirect(new URL("/", req.url));
+  if (pathname == "/") {
+    return NextResponse.redirect(new URL("/home", req.url));
   }
   if (!token && PRIVATE_ROUTES.includes(pathname)) {
     return NextResponse.redirect(new URL("/login", req.url));

@@ -6,3 +6,5 @@ export const ADDRESS = "/bakery/bakery-addresses/"
 export const CHECKOUT = "/orders/checkout/"
 export const USER_COUPON = "/user/coupons/"
 export const APPLY_COUPON = "/apply/coupon/"
+export const CHECK_ZIP = "/delivery/check-zipcode/";
+export const FAVOURITE_ENDPOINT = "/favourite_item/"
