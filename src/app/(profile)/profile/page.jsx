@@ -1,5 +1,5 @@
 'use client'
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import Location from "../../../../public/icons/location";
 import OrderCart from "../../../../public/icons/orderCart";
 import Heart from "../../../../public/icons/heart";
@@ -11,10 +11,15 @@ import ProfilePayment from "@/_components/ProfilePayment";
 import ProfileAddress from "@/_components/ProfileAddress";
 import ProfileSetting from "@/_components/ProfileSetting";
 import Sidebar from "@/_components/Sidebar";
+import { ADDRESS, FAVOURITE_ENDPOINT } from "@/_Api Handlers/endpoints";
+import { callApi, METHODS } from "@/_Api Handlers/apiFunctions";
+import { INSTANCE } from "@/_Api Handlers/apiConfig";
 
 const Profile = () => {
   const [currentCategory, setCurrentCategory] = useState('orders');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [favouriteItems, setFavouriteItems] = useState([])
+  const [addresses, setAddresses] = useState([]);
 
   const handleCategoryChange = (category) => {
     setCurrentCategory(category);
@@ -24,16 +29,44 @@ const Profile = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  useEffect(()=>{
+    callApi({
+      endPoint: FAVOURITE_ENDPOINT,
+      method: METHODS.get,
+      instanceType: INSTANCE?.authorized,
+    })
+      .then((response) => {
+        console.log(response,"response");
+        setFavouriteItems(response?.data?.results)
+      })
+      .catch((err) => {
+        console.error("Error fetching products:", err);
+      })
+
+      callApi({
+        endPoint: ADDRESS,
+        method: "GET",
+        instanceType: INSTANCE?.authorized,
+      })
+        .then((res) => {
+          console.log(res, "RESPONSE OF ADDRESS dsfadfdsfdf");
+          setAddresses(res?.data?.results);
+        })
+        .catch((error) => {
+          console.error("Error getting address:", error);
+        });
+  },[])
+
   const renderContent = () => {
     switch (currentCategory) {
       case 'orders':
         return <ProfileOrder />;
       case 'favorites':
-        return <ProfileFavourite />;
+        return <ProfileFavourite favorites={favouriteItems}/>;
       case 'payments':
         return <ProfilePayment />;
       case 'addresses':
-        return <ProfileAddress />;
+        return <ProfileAddress addresses={addresses}/>;
       case 'settings':
         return <ProfileSetting />;
       default:

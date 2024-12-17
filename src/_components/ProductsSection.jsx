@@ -36,7 +36,6 @@ const DUMMY_DATA = [
 const ProductsSection = () => {
   const [products, setProducts] = useState([]);
 
-  const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -83,7 +82,7 @@ const ProductsSection = () => {
         {products.length > 0 ? (
           <div className="flex space-x-5 justify-center flex-wrap">
             {products?.map((curItem, index) => (
-              <div onClick={() => router.push(`/products/${curItem.id}`)}>
+              <div>
                 <CardComponentOne
                   key={index}
                   data={curItem}

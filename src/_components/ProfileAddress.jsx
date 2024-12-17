@@ -1,27 +1,27 @@
 import React from "react";
 import Location from "../../public/icons/location";
 
-const ProfileAddress = () => {
-  const addresses = [
-    {
-      address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden"
-    },
-    {
-      address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden"
-    },
-    {
-      address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden"
-    },
-    {
-      address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden"
-    },
-    {
-      address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden"
-    },
-    {
-      address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden"
-    },
-  ];
+const ProfileAddress = ({addresses}) => {
+  // const addresses = [
+  //   {
+  //     address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden"
+  //   },
+  //   {
+  //     address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden"
+  //   },
+  //   {
+  //     address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden"
+  //   },
+  //   {
+  //     address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden"
+  //   },
+  //   {
+  //     address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden"
+  //   },
+  //   {
+  //     address: "Storgatan 45, 2 tr (2nd floor), 123 45 Göteborg, Sweden"
+  //   },
+  // ];
 
   const handleDelete = (id) => {
     console.log(`Delete card with id: ${id}`);
@@ -43,7 +43,7 @@ const ProfileAddress = () => {
               <Location />
             </div>
             <div className="flex flex-col justify-between w-4/5 gap-4">
-              <div className="text-black text-sm">{card.address}</div>
+              <div className="text-black text-sm">{`${card.address}, ${card.city}, ${card.state}`}</div>
               <div className="flex gap-4">
                 <div className="text-green-600 text-sm cursor-pointer">EDIT</div>
                 <div className="text-gray-400 text-sm cursor-pointer">DELETE</div>

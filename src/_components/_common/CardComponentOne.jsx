@@ -1,12 +1,9 @@
 "use client";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Image from "next/image";
-import React from "react";
-import { usePathname } from "next/navigation";
-import { callApi } from "@/_Api Handlers/apiFunctions";
+import React, { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { callApi, METHODS } from "@/_Api Handlers/apiFunctions";
 import { successType, toastMessage } from "@/_utils/toastMessage";
-import { ADD_TO_CART } from "@/_Api Handlers/endpoints";
+import { ADD_TO_CART, FAVOURITE_ENDPOINT } from "@/_Api Handlers/endpoints";
 import { createPreview } from "@/_utils/helpers";
 import Heart from "../../../public/icons/heart";
 import Cart from "../../../public/icons/cart";
@@ -16,36 +13,77 @@ import { addItem } from "../../../redux/cartSlice";
 import { INSTANCE } from "@/_Api Handlers/apiConfig";
 
 const CardComponentOne = ({ data, showButtons = false }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+
   console.log(data, "this is data");
   // commented for future use
   // const { images, name } = data;
   const { title, imageUrl, price, name } = data;
 
+  const router = useRouter();
   const pathName = usePathname();
   const dispatch = useDispatch();
 
   const isProductsPage = pathName === "/products";
 
+  const handleFavorite = (event, data) => {
+    event.stopPropagation();
+    console.log(data, "dffdkfdfjkdjfjdfjdatata");
+
+    if (isFavorite) {
+      callApi({
+        endPoint: `${FAVOURITE_ENDPOINT}${data.id}/`,
+        method: METHODS.delete,
+        instanceType: INSTANCE?.authorized,
+      })
+        .then((res) => {
+          setIsFavorite(false);
+          toastMessage("Removed from favorites", "success");
+        })
+        .catch((error) => {
+          console.error("Error removing from favorites:", error);
+          toastMessage("Failed to remove from favorites", "error");
+        });
+    } else {
+      const payload = {
+        product: data.id,
+      };
+      callApi({
+        endPoint: FAVOURITE_ENDPOINT,
+        method: METHODS.post,
+        instanceType: INSTANCE?.authorized,
+        payload: payload,
+      })
+        .then((res) => {
+          setIsFavorite(true);
+          toastMessage("Added to favorites", "success");
+        })
+        .catch((error) => {
+          console.error("Error adding to favorites:", error);
+          toastMessage("Failed to add to favorites", "error");
+        });
+    }
+  };
+
   const handleCart = (event, payload) => {
     event.stopPropagation();
-    console.log(payload,'payloadskfdjksdjf');
 
     callApi({
       endPoint: ADD_TO_CART,
       method: "POST",
-      instanceType:INSTANCE?.authorized,
+      instanceType: INSTANCE?.authorized,
       payload: {
-        "product_variant": payload.id,
-        "quantity": 1
+        product_variant: payload.id,
+        quantity: 1,
       },
     })
       .then((res) => {
-        if(res.data.error){
+        if (res.data.error) {
           toastMessage(res.data.error, "error");
           return;
         }
         dispatch(addItem(res.data));
-        toastMessage("Product added successfully","success");
+        toastMessage("Product added successfully", "success");
       })
       .catch((error) => {
         console.error("Error adding to cart:", error);
@@ -105,32 +143,40 @@ const CardComponentOne = ({ data, showButtons = false }) => {
           className="absolute inset-0 flex items-center justify-center gap-2 
   opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/80 rounded-[26px]"
         >
-          <button className="p-3 bg-red-500 text-white rounded-full">
-            <Heart fill="white" />
+          <button
+            className={`p-3 text-white rounded-full ${
+              isFavorite ? "bg-white" : "bg-red-500"
+            }`}
+            onClick={(e) => handleFavorite(e, data)}
+          >
+            <Heart fill={isFavorite ? "red" : "white"} />
           </button>
           <button
             className="p-3 bg-red-500 text-white rounded-full"
-            onClick={(e) => handleCart(e,data)}
+            onClick={(e) => handleCart(e, data)}
           >
             <Cart fill="white" />
           </button>
-          <button className="p-3 bg-red-500 text-white rounded-full">
+          <button
+            className="p-3 bg-red-500 text-white rounded-full"
+            onClick={() => router.push(`/products/${data.id}`)}
+          >
             <Eye fill="white" />
           </button>
         </div>
       )}
       {isProductsPage && (
         <div
-        className="absolute inset-0 flex items-center justify-center gap-2 
+          className="absolute inset-0 flex items-center justify-center gap-2 
 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/80 rounded-[26px]"
-      >
-        <button
-          className="p-3 bg-red-500 text-white rounded-lg"
-          onClick={(event) => handleCart(event, data)}
         >
-          ADD TO CART
-        </button>
-      </div>
+          <button
+            className="p-3 bg-red-500 text-white rounded-lg"
+            onClick={(event) => handleCart(event, data)}
+          >
+            ADD TO CART
+          </button>
+        </div>
       )}
     </div>
   );
