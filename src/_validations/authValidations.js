@@ -127,3 +127,50 @@ export const ForgetPasswordValidations = {
     message: "Please enter a valid email",
   },
 };
+
+export const profileValidations = {
+  first_name: {
+    required: "First Name is required",
+  },
+  last_name: {
+    required: "Last Name is required",
+  },
+  email: {
+    required: "Email address is required",
+    pattern: {
+      value: EMAIL_REGEX,
+      message: INVALID_EMAIL_MESSAGE,
+    },
+  },
+  phone_number: {
+    required: "Phone number is required",
+    minLength: {
+      value: 10,
+      message: "Phone number must be exactly 10 digits",
+    },
+  },
+  old_password: {
+    required: "Old password is required",
+  },
+  new_password: {
+    required: "New password is required",
+  },
+  confirm_password: {
+    required: "Confirm password is required",
+  },
+  address_one: {
+    required: "This field is required",
+  },
+  address_two: {
+    required: "This field is required",
+  },
+  // company_address: {
+  //   required: "Company address is required",
+  // },
+  // zip_code: {
+  //   required: "ZIP code is required",
+  // },
+  // business_type: {
+  //   required: "Business type is required",
+  // },
+};

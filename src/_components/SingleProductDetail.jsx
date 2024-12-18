@@ -39,7 +39,12 @@ const SingleProductDetail = ({ rating = 3, reviews = 6, product }) => {
 
   const handleCart = (payload) => {
     // event.stopPropagation();
-    console.log(payload,'payloadskfdjksdjf');
+    let token = localStorage.getItem("token");
+    if (!token) {
+      toastMessage("Please login to add product to cart", "error");
+      return;
+    }
+
     if(!selectedQuantity?.inventory?.id){
       toastMessage("Please select a valid quantity", "error");
       return;

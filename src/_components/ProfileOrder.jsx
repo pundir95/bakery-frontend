@@ -4,7 +4,7 @@ import Cart from "../../public/icons/cart";
 import QuestionMark from "../../public/icons/questionMark";
 import Location from "../../public/icons/location";
 
-const ProfileOrder = () => {
+const ProfileOrder = ({toggleSidebar,handleSideBarItem}) => {
   const orders = [
     {
       id: "1879872132466",
@@ -40,6 +40,11 @@ const ProfileOrder = () => {
   );
   const pastOrders = orders.filter((order) => order.status === "Delivered");
 
+  const handleOrder = () => {
+    handleSideBarItem("orders");
+    toggleSidebar();
+  }
+
   return (
     <div className="w-full">
             {/* Orders Section */}
@@ -67,7 +72,7 @@ const ProfileOrder = () => {
                       <span className="text-black font-extrabold text-sm">Total Paid:</span> {order.totalPaid}
                     </div>
                     <div className="flex gap-2 mt-2">
-                      <div className="rounded-full p-2 bg-[#F2FFEC]">
+                      <div className="rounded-full p-2 bg-[#F2FFEC] cursor-pointer" onClick={handleOrder}>
                         <Eye />
                       </div>
                       <div className="rounded-full p-2 bg-[#F2FFEC]">
@@ -108,7 +113,7 @@ const ProfileOrder = () => {
                       <span className="text-black font-extrabold text-sm">Total Paid:</span> {order.totalPaid}
                     </div>
                     <div className="flex gap-2 mt-2">
-                      <div className="rounded-full p-2 bg-[#F2FFEC]">
+                      <div className="rounded-full p-2 bg-[#F2FFEC] cursor-pointer" onClick={handleOrder}>
                         <Eye />
                       </div>
                       <div className="rounded-full p-2 bg-[#F2FFEC]">

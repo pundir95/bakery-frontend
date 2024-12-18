@@ -11,7 +11,7 @@ import ProfilePayment from "@/_components/ProfilePayment";
 import ProfileAddress from "@/_components/ProfileAddress";
 import ProfileSetting from "@/_components/ProfileSetting";
 import Sidebar from "@/_components/Sidebar";
-import { ADDRESS, FAVOURITE_ENDPOINT } from "@/_Api Handlers/endpoints";
+import { ADDRESS, FAVOURITE_ENDPOINT, PROFILE_UPDATE, UPDATE_PASSWORD } from "@/_Api Handlers/endpoints";
 import { callApi, METHODS } from "@/_Api Handlers/apiFunctions";
 import { INSTANCE } from "@/_Api Handlers/apiConfig";
 
@@ -20,6 +20,8 @@ const Profile = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [favouriteItems, setFavouriteItems] = useState([])
   const [addresses, setAddresses] = useState([]);
+  const [sideBarItems, setSideBarItems] = useState("orders");
+  const [profileData, setProfileData] = useState();
 
   const handleCategoryChange = (category) => {
     setCurrentCategory(category);
@@ -29,6 +31,20 @@ const Profile = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const handleSideBarItem = (item) => {
+    setSideBarItems(item);
+  };
+
+  const handleEditProfile = () => {
+    handleSideBarItem("editProfile");
+    toggleSidebar();
+  }
+
+  const handleChangePassword = () => {
+    handleSideBarItem("changePassword");
+    // toggleSidebar();
+  }
+
   useEffect(()=>{
     callApi({
       endPoint: FAVOURITE_ENDPOINT,
@@ -37,7 +53,7 @@ const Profile = () => {
     })
       .then((response) => {
         console.log(response,"response");
-        setFavouriteItems(response?.data?.results)
+        setFavouriteItems(response?.data?.results);
       })
       .catch((err) => {
         console.error("Error fetching products:", err);
@@ -55,12 +71,25 @@ const Profile = () => {
         .catch((error) => {
           console.error("Error getting address:", error);
         });
+
+        callApi({
+          endPoint: PROFILE_UPDATE,
+          method: "GET",
+          instanceType: INSTANCE?.authorized,
+        })
+          .then((res) => {
+            console.log(res, "RESPONSE OF ADDRESS NNNNNNNNNNN");
+            setProfileData(res?.data);
+          })
+          .catch((error) => {
+            console.error("Error getting address:", error);
+          });
   },[])
 
   const renderContent = () => {
     switch (currentCategory) {
       case 'orders':
-        return <ProfileOrder />;
+        return <ProfileOrder toggleSidebar={toggleSidebar} handleSideBarItem={handleSideBarItem}/>;
       case 'favorites':
         return <ProfileFavourite favorites={favouriteItems}/>;
       case 'payments':
@@ -70,7 +99,7 @@ const Profile = () => {
       case 'settings':
         return <ProfileSetting />;
       default:
-        return <ProfileOrder orders={orders} />;
+        return <ProfileOrder />;
     }
   };
 
@@ -88,7 +117,7 @@ const Profile = () => {
             </div>
           </div>
           <div>
-            <button className="bg-[#FF6D2F] text-white py-2 px-4 rounded-md" onClick={toggleSidebar}>
+            <button className="bg-[#FF6D2F] text-white py-2 px-4 rounded-md" onClick={handleEditProfile}>
               Edit Profile
             </button>
           </div>
@@ -145,7 +174,7 @@ const Profile = () => {
       </div>
 
       {/* Sidebar */}
-      <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}/>
+      <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} sideBarItems={sideBarItems} handleChangePassword={handleChangePassword} profileData={profileData}/>
     </>
   );
 };
