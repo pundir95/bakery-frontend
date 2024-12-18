@@ -68,6 +68,12 @@ const CardComponentOne = ({ data, showButtons = false }) => {
   const handleCart = (event, payload) => {
     event.stopPropagation();
 
+    let token = localStorage.getItem("token");
+    if (!token) {
+      toastMessage("Please login to add product to cart", "error");
+      return;
+    }
+
     callApi({
       endPoint: ADD_TO_CART,
       method: "POST",

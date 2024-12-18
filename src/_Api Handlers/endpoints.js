@@ -8,3 +8,5 @@ export const USER_COUPON = "/user/coupons/"
 export const APPLY_COUPON = "/apply/coupon/"
 export const CHECK_ZIP = "/delivery/check-zipcode/";
 export const FAVOURITE_ENDPOINT = "/favourite_item/"
+export const PROFILE_UPDATE = "/bakery/update-bakery/";
+export const UPDATE_PASSWORD = "/password/new/";
